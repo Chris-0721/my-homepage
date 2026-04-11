@@ -37,6 +37,9 @@ export interface LocaleMessages {
     filters: string;
     year: string;
     type: string;
+    authorRole: string;
+    firstAuthor: string;
+    correspondingAuthor: string;
     noResults: string;
     abstract: string;
     bibtex: string;
@@ -87,6 +90,9 @@ const en: LocaleMessages = {
     filters: 'Filters',
     year: 'Year',
     type: 'Type',
+    authorRole: 'Author Role',
+    firstAuthor: 'First / Co-first',
+    correspondingAuthor: 'Corresponding',
     noResults: 'No publications found matching your criteria.',
     abstract: 'Abstract',
     bibtex: 'BibTeX',
@@ -137,6 +143,9 @@ const zh: LocaleMessages = {
     filters: '筛选',
     year: '年份',
     type: '类型',
+    authorRole: '作者身份',
+    firstAuthor: '第一/共一',
+    correspondingAuthor: '通讯',
     noResults: '没有找到符合条件的论文。',
     abstract: '摘要',
     bibtex: 'BibTeX',

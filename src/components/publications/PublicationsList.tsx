@@ -9,7 +9,8 @@ import {
     CalendarIcon,
     BookOpenIcon,
     ClipboardDocumentIcon,
-    DocumentTextIcon
+    DocumentTextIcon,
+    UserGroupIcon
 } from '@heroicons/react/24/outline';
 import { Publication } from '@/types/publication';
 import { PublicationPageConfig } from '@/types/page';
@@ -27,6 +28,7 @@ export default function PublicationsList({ config, publications, embedded = fals
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedYear, setSelectedYear] = useState<number | 'all'>('all');
     const [selectedType, setSelectedType] = useState<string | 'all'>('all');
+    const [selectedAuthorRole, setSelectedAuthorRole] = useState<'all' | 'firstAuthor' | 'corresponding'>('all');
     const [showFilters, setShowFilters] = useState(false);
     const [expandedBibtexId, setExpandedBibtexId] = useState<string | null>(null);
     const [expandedAbstractId, setExpandedAbstractId] = useState<string | null>(null);
@@ -54,9 +56,14 @@ export default function PublicationsList({ config, publications, embedded = fals
             const matchesYear = selectedYear === 'all' || pub.year === selectedYear;
             const matchesType = selectedType === 'all' || pub.type === selectedType;
 
-            return matchesSearch && matchesYear && matchesType;
+            const matchesAuthorRole =
+                selectedAuthorRole === 'all' ||
+                (selectedAuthorRole === 'firstAuthor' && pub.authors.some(a => a.isCoAuthor)) ||
+                (selectedAuthorRole === 'corresponding' && pub.authors.some(a => a.isCorresponding));
+
+            return matchesSearch && matchesYear && matchesType && matchesAuthorRole;
         });
-    }, [publications, searchQuery, selectedYear, selectedType]);
+    }, [publications, searchQuery, selectedYear, selectedType, selectedAuthorRole]);
 
     return (
         <motion.div
@@ -177,16 +184,52 @@ export default function PublicationsList({ config, publications, embedded = fals
                                         ))}
                                     </div>
                                 </div>
+
+                                {/* Author Role Filter */}
+                                <div className="space-y-2">
+                                    <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300 flex items-center">
+                                        <UserGroupIcon className="h-4 w-4 mr-1" /> {messages.publications.authorRole}
+                                    </label>
+                                    <div className="flex flex-wrap gap-2">
+                                        <button
+                                            onClick={() => setSelectedAuthorRole('all')}
+                                            className={cn(
+                                                "px-3 py-1 text-xs rounded-full transition-colors",
+                                                selectedAuthorRole === 'all'
+                                                    ? "bg-accent text-white"
+                                                    : "bg-white dark:bg-neutral-800 text-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-700"
+                                            )}
+                                        >
+                                            {messages.common.all}
+                                        </button>
+                                        <button
+                                            onClick={() => setSelectedAuthorRole('firstAuthor')}
+                                            className={cn(
+                                                "px-3 py-1 text-xs rounded-full transition-colors",
+                                                selectedAuthorRole === 'firstAuthor'
+                                                    ? "bg-accent text-white"
+                                                    : "bg-white dark:bg-neutral-800 text-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-700"
+                                            )}
+                                        >
+                                            {messages.publications.firstAuthor}
+                                        </button>
+                                        <button
+                                            onClick={() => setSelectedAuthorRole('corresponding')}
+                                            className={cn(
+                                                "px-3 py-1 text-xs rounded-full transition-colors",
+                                                selectedAuthorRole === 'corresponding'
+                                                    ? "bg-accent text-white"
+                                                    : "bg-white dark:bg-neutral-800 text-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-700"
+                                            )}
+                                        >
+                                            {messages.publications.correspondingAuthor}
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </motion.div>
                     )}
                 </AnimatePresence>
-            </div>
-
-            {/* Author Legend */}
-            <div className="mb-6 text-xs text-neutral-500 dark:text-neutral-400 space-x-4">
-                <span><span className="underline underline-offset-4 decoration-neutral-400 mr-1">Author Name</span> Co-first author</span>
-                <span>Author Name<sup className="ml-0.5">†</sup> Corresponding author</span>
             </div>
 
             {/* Publications Grid */}

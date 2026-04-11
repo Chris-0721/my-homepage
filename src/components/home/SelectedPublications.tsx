@@ -31,11 +31,6 @@ export default function SelectedPublications({ publications, title, enableOnePag
                     {messages.home.viewAll} →
                 </Link>
             </div>
-            {/* Author Legend */}
-            <div className="mb-4 text-xs text-neutral-500 dark:text-neutral-400 space-x-4">
-                <span><span className="underline underline-offset-4 decoration-neutral-400 mr-1">Author Name</span> Co-first author</span>
-                <span>Author Name<sup className="ml-0.5">†</sup> Corresponding author</span>
-            </div>
             <div className="space-y-4">
                 {publications.map((pub, index) => (
                     <motion.div
