@@ -1,30 +1,42 @@
 type = "card"
-title = "Awards"
-description = "Honors and awards I have received."
+title = "Awards & Conference Presentations"
+description = "Patents, honors, and conference presentations."
+
+[[items]]
+title = "Patent (Inventor)"
+subtitle = "China Invention Patent"
+date = "2022"
+content = "一种基于全息倏逝波光镊的智能分析方法与装置。Inventors: Zhang, Yuquan; Xie, Xi; Wang, Xianyou; Min, Changjun; Yuan, Xiaocong. Patent No. 202111310256.9."
 
 [[items]]
 title = "Oral Presentation"
-subtitle = "Photonics M3 Conference"
+subtitle = "PIESR Chiba 2025"
+date = "2025"
+content = "Topological Magnetic Lattices for On-Chip Nanoparticle Trapping and Sorting. Chiba, Japan."
+
+[[items]]
+title = "Oral Presentation"
+subtitle = "Photonics M3 Conference 2025"
 date = "2025"
 content = "Topological Light Waves Manipulating Particles. Bali, Indonesia."
 
 [[items]]
 title = "Oral Presentation"
-subtitle = "4th China Metamaterial Conference"
+subtitle = "4th China Metamaterial Conference 2025"
 date = "2025"
 content = "Topological Magnetic Lattices for On-Chip Nanoparticle Trapping and Sorting. Shenzhen, China."
 
 [[items]]
-title = "Excellent Product Award"
-subtitle = "24th China Hi-Tech Fair"
-date = "2022"
-content = "Holographic Optical Tweezers System for Biological Cell Manipulation and Culture."
+title = "Oral Presentation"
+subtitle = "Advanced Photonics Forum 2024"
+date = "2024"
+content = "旋涡光场调控与应用。Chengdu, China."
 
 [[items]]
-title = "Second Prize, Startup Group"
-subtitle = "Innovation Nanshan 2022 Star of Entrepreneurship Competition"
-date = "2022"
-content = "Biomedical Industry. Holographic Optical Tweezers System for Biological Cell Manipulation and Culture."
+title = "Poster Presentation"
+subtitle = "China Optics Research Forum 2023"
+date = "2023"
+content = "Tunable trapping of single nanoparticle by evanescent-wave tweezers with anapole mode. Fuyang, Hangzhou, China."
 
 [[items]]
 title = "Poster Presentation"
@@ -42,4 +54,4 @@ content = "Single-particle trapping and dynamic manipulation with holographic op
 title = "Poster Presentation"
 subtitle = "SPIE/COS Photonics Asia 2020"
 date = "2020"
-content = "Graphene-based opto-thermoelectric nanotweezers."
+content = "Graphene-based opto-thermoelectric nanotweezers. Online."
