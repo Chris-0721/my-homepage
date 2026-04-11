@@ -11,6 +11,12 @@ research_interests = [
 ]
 
 [[sections]]
+id = "news"
+type = "list"
+source = "news.toml"
+title = "最新动态"
+
+[[sections]]
 id = "about"
 type = "markdown"
 source = "bio.md"
