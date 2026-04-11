@@ -183,6 +183,12 @@ export default function PublicationsList({ config, publications, embedded = fals
                 </AnimatePresence>
             </div>
 
+            {/* Author Legend */}
+            <div className="mb-6 text-xs text-neutral-500 dark:text-neutral-400 space-x-4">
+                <span><span className="underline underline-offset-4 decoration-neutral-400 mr-1">Author Name</span> Co-first author</span>
+                <span>Author Name<sup className="ml-0.5">†</sup> Corresponding author</span>
+            </div>
+
             {/* Publications Grid */}
             <div className="space-y-6">
                 {filteredPublications.length === 0 ? (

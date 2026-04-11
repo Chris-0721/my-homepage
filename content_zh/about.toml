@@ -11,12 +11,6 @@ research_interests = [
 ]
 
 [[sections]]
-id = "news"
-type = "list"
-source = "news.toml"
-title = "最新动态"
-
-[[sections]]
 id = "about"
 type = "markdown"
 source = "bio.md"
@@ -28,3 +22,9 @@ type = "publications"
 title = "精选论文"
 filter = "selected"
 limit = 5
+
+[[sections]]
+id = "news"
+type = "list"
+source = "news.toml"
+title = "最新动态"
