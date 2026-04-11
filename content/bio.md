@@ -1,5 +1,7 @@
-I received my Ph.D. in Optical Engineering from Shenzhen University in 2024, under the supervision of Prof. [Changjun Min](https://scholar.google.com/citations?user=YOURID). From January 2025 to January 2026, I was a Postdoctoral Research Fellow at Nanyang Technological University, Singapore, working with Prof. [Yijie Shen](https://scholar.google.com/citations?user=YOURID) on topological structured light and its interaction with matter.
+I received my Ph.D. in Optical Engineering from Shenzhen University in June 2024, under the supervision of Prof. [Changjun Min](https://scholar.google.com/citations?user=R3bqbxAAAAAJ). My doctoral research focused on optical surface waves and optical tweezers manipulation.
 
-Since May 2026, I have been an Associate Researcher at the College of Physics, Chengdu University of Technology.
+From January 2025 to January 2026, I was a Postdoctoral Research Fellow at Nanyang Technological University, Singapore, working with Prof. [Yijie Shen](https://scholar.google.com/citations?user=5eGuLSUAAAAJ) on topological structured light and its interaction with matter.
 
-My research focuses on structured light field manipulation, topological structured light, and optical tweezers. I have published 17+ papers in journals including *Advanced Materials*, *Light: Science & Applications*, *ACS Nano*, *Nano Letters*, and *Photonics Research*.
+Since May 2026, I have been an Associate Researcher at the College of Physics, Chengdu University of Technology, joining Prof. [Fangwei Ye](https://scholar.google.com/citations?user=W6ZrnmIAAAAJ)'s research group.
+
+My research focuses on structured light field manipulation, topological structured light, and optical tweezers. I have published 20+ peer-reviewed papers in top-tier journals including *Nature Communications*, *Advanced Materials*, *Light: Science & Applications*, *Nano Letters*, and *Photonics Research*.
