@@ -60,7 +60,7 @@ target = "publications"
 href = "/publications"
 
 [[navigation]]
-title = "Awards"
+title = "Conference & Awards"
 type = "page"
 target = "awards"
 href = "/awards"

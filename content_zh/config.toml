@@ -31,7 +31,7 @@ target = "publications"
 href = "/publications"
 
 [[navigation]]
-title = "奖项"
+title = "会议与奖项"
 type = "page"
 target = "awards"
 href = "/awards"
