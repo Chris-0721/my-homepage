@@ -10,7 +10,6 @@
 
 PRISM stands for **P**ortfolio & **R**esearch **I**nterface **S**ite **M**aker. It is a modern, configurable, and high-performance personal website template built with Next.js, Tailwind CSS, and TypeScript. It is designed for researchers, developers, and academics to showcase their work, publications, and portfolio with ease.
 
-![PRISM Preview](screenshot.png)
 
 ## ✨ Features
 
