@@ -1,18 +1,18 @@
 [site]
-title = "谢希"
+title = "X^2 Lab"
 description = "成都理工大学物理学院副研究员"
 last_updated = "2026年4月"
 
 [author]
 name = "谢希"
 title = "副研究员"
-institution = "成都理工大学物理学院"
+institution = "成都理工大学 · 物理学院"
 
 [social]
 email = "xixie0721@163.com"
 location = "四川南充"
 location_details = [
-  "成都理工大学物理学院，",
+  "成都理工大学 · 物理学院，",
   "四川成都 610059"
 ]
 google_scholar = "https://scholar.google.com.hk/citations?user=61xHj8MAAAAJ"
