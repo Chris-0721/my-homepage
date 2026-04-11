@@ -3,25 +3,43 @@ title = "奖项"
 description = "我获得的荣誉与奖项。"
 
 [[items]]
-title = "示例奖项"
-subtitle = "颁发机构"
+title = "口头报告"
+subtitle = "Photonics M3 Conference"
 date = "2025"
-content = "奖项说明。"
+content = "Topological Light Waves Manipulating Particles。印度尼西亚·巴厘岛。"
 
 [[items]]
-title = "示例奖项"
-subtitle = "颁发机构"
-date = "2024"
-content = "奖项说明。"
+title = "口头报告"
+subtitle = "第四届中国超材料大会"
+date = "2025"
+content = "Topological Magnetic Lattices for On-Chip Nanoparticle Trapping and Sorting。中国·深圳。"
 
 [[items]]
-title = "示例奖项"
-subtitle = "颁发机构"
-date = "2023"
-content = "奖项说明。"
-
-[[items]]
-title = "示例奖项"
-subtitle = "颁发机构"
+title = "优秀产品奖"
+subtitle = "第二十四届中国国际高新技术成果交易会"
 date = "2022"
-content = "奖项说明。"
+content = "用于生物细胞操控与培养的全息光镊系统。"
+
+[[items]]
+title = "二等奖（初创团队组）"
+subtitle = "创新南山2022'创业之星'大赛"
+date = "2022"
+content = "生物医药行业赛。获奖项目：用于生物细胞操控与培养的全息光镊系统。"
+
+[[items]]
+title = "海报展示"
+subtitle = "第十三届国际信息光学与光子学学术会议 CIOP 2022"
+date = "2022"
+content = "基于anapole模式的倏逝波光镊精准捕获单纳米颗粒。中国·西安。"
+
+[[items]]
+title = "海报展示"
+subtitle = "SPIE/COS Photonics Asia 2021"
+date = "2021"
+content = "基于全息表面波的单颗粒光镊技术研究。中国·南通。"
+
+[[items]]
+title = "海报展示"
+subtitle = "SPIE/COS Photonics Asia 2020"
+date = "2020"
+content = "基于石墨烯的热电光镊研究。"

@@ -3,25 +3,43 @@ title = "Awards"
 description = "Honors and awards I have received."
 
 [[items]]
-title = "Example Award"
-subtitle = "Organization"
+title = "Oral Presentation"
+subtitle = "Photonics M3 Conference"
 date = "2025"
-content = "Description of the award."
+content = "Topological Light Waves Manipulating Particles. Bali, Indonesia."
 
 [[items]]
-title = "Example Award"
-subtitle = "Organization"
-date = "2024"
-content = "Description of the award."
+title = "Oral Presentation"
+subtitle = "4th China Metamaterial Conference"
+date = "2025"
+content = "Topological Magnetic Lattices for On-Chip Nanoparticle Trapping and Sorting. Shenzhen, China."
 
 [[items]]
-title = "Example Award"
-subtitle = "Organization"
-date = "2023"
-content = "Description of the award."
-
-[[items]]
-title = "Example Award"
-subtitle = "Organization"
+title = "Excellent Product Award"
+subtitle = "24th China Hi-Tech Fair"
 date = "2022"
-content = "Description of the award."
+content = "Holographic Optical Tweezers System for Biological Cell Manipulation and Culture."
+
+[[items]]
+title = "Second Prize, Startup Group"
+subtitle = "Innovation Nanshan 2022 Star of Entrepreneurship Competition"
+date = "2022"
+content = "Biomedical Industry. Holographic Optical Tweezers System for Biological Cell Manipulation and Culture."
+
+[[items]]
+title = "Poster Presentation"
+subtitle = "CIOP 2022"
+date = "2022"
+content = "Accurate trapping of single nanoparticle by evanescent-wave tweezers with anapole mode. Xi'an, China."
+
+[[items]]
+title = "Poster Presentation"
+subtitle = "SPIE/COS Photonics Asia 2021"
+date = "2021"
+content = "Single-particle trapping and dynamic manipulation with holographic optical surface-wave tweezers. Nantong, China."
+
+[[items]]
+title = "Poster Presentation"
+subtitle = "SPIE/COS Photonics Asia 2020"
+date = "2020"
+content = "Graphene-based opto-thermoelectric nanotweezers."

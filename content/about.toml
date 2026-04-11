@@ -3,9 +3,11 @@ title = "About"
 
 [profile]
 research_interests = [
-  "Computational Physics",
-  "Mathematical Principles",
-  "Proof of Theorems"
+  "Structured Light Field Manipulation",
+  "Topological Structured Light",
+  "Optical Tweezers",
+  "Nanophotonics",
+  "Plasmonics"
 ]
 
 [[sections]]
@@ -20,10 +22,3 @@ type = "publications"
 title = "Selected Publications"
 filter = "selected"
 limit = 5
-
-[[sections]]
-id = "news"
-type = "list"
-title = "News"
-source = "news.toml"
-

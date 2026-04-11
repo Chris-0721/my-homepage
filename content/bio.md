@@ -1,5 +1,5 @@
-I am a PhD student at the School of Science, University of Example, advised by [Prof. Advisor One](https://example.com) and [Dr. Advisor Two](https://example.com).
+I received my Ph.D. in Optical Engineering from Shenzhen University in 2024, under the supervision of Prof. [Changjun Min](https://scholar.google.com/citations?user=YOURID). From January 2025 to January 2026, I was a Postdoctoral Research Fellow at Nanyang Technological University, Singapore, working with Prof. [Yijie Shen](https://scholar.google.com/citations?user=YOURID) on topological structured light and its interaction with matter.
 
-Prior to this, I obtained a BSc degree with First Class Honours in Natural Science from the University of Example.
+Since May 2026, I have been an Associate Researcher at the College of Physics, Chengdu University of Technology.
 
-My current research focuses on investigating the mathematical principles of natural philosophy.
+My research focuses on structured light field manipulation, topological structured light, and optical tweezers. I have published 17+ papers in journals including *Advanced Materials*, *Light: Science & Applications*, *ACS Nano*, *Nano Letters*, and *Photonics Research*.
