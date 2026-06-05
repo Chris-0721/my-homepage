@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>光镊操控文章 AI 润色提示词工具页</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f8fafc; color: #0f172a; min-height: 100vh; }
+    a { text-decoration: none; color: inherit; }
+
+    /* Header */
+    header { border-bottom: 1px solid #e2e8f0; background: rgba(255,255,255,0.92); backdrop-filter: blur(8px); }
+    .header-inner { max-width: 1100px; margin: 0 auto; padding: 48px 24px; }
+    .badge-top { display: inline-flex; align-items: center; gap: 8px; border: 1px solid #e2e8f0; background: #f8fafc; padding: 6px 14px; border-radius: 999px; font-size: 13px; font-weight: 500; color: #475569; margin-bottom: 20px; }
+    .header-grid { display: grid; gap: 32px; }
+    @media (min-width: 1024px) { .header-grid { grid-template-columns: 1.2fr 0.8fr; align-items: end; } }
+    h1 { font-size: clamp(28px, 5vw, 44px); font-weight: 600; letter-spacing: -0.03em; color: #020617; }
+    .header-desc { margin-top: 16px; font-size: 16px; line-height: 1.75; color: #475569; max-width: 680px; }
+    .tip-box { border: 1px solid #e2e8f0; background: #f8fafc; border-radius: 20px; padding: 20px; }
+    .tip-box-title { font-size: 14px; font-weight: 600; color: #020617; }
+    .tip-box-desc { margin-top: 8px; font-size: 13px; line-height: 1.7; color: #475569; }
+    .tip-box .btn-wrap { margin-top: 16px; }
+
+    /* Nav bar */
+    .navbar { position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #e2e8f0; background: rgba(255,255,255,0.97); backdrop-filter: blur(8px); }
+    .navbar-inner { max-width: 1100px; margin: 0 auto; padding: 12px 24px; display: flex; flex-direction: column; gap: 12px; }
+    @media (min-width: 1024px) { .navbar-inner { flex-direction: row; align-items: center; justify-content: space-between; } }
+    .nav-links { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px; }
+    .nav-links::-webkit-scrollbar { height: 4px; }
+    .nav-links::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 2px; }
+    .nav-link { flex-shrink: 0; border: 1px solid #e2e8f0; border-radius: 999px; padding: 5px 14px; font-size: 13px; font-weight: 500; color: #64748b; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+    .nav-link:hover { border-color: #0f172a; color: #020617; }
+    .search-input { width: 100%; border: 1px solid #e2e8f0; background: #f8fafc; border-radius: 999px; padding: 8px 16px; font-size: 13px; outline: none; transition: border-color 0.15s; color: #334155; }
+    @media (min-width: 1024px) { .search-input { width: 260px; } }
+    .search-input::placeholder { color: #94a3b8; }
+    .search-input:focus { border-color: #0f172a; }
+
+    /* Main layout */
+    .main-grid { max-width: 1100px; margin: 0 auto; padding: 32px 24px; display: grid; gap: 24px; align-items: start; }
+    @media (min-width: 1024px) { .main-grid { grid-template-columns: 1fr 280px; } }
+    .sections-col { display: flex; flex-direction: column; gap: 24px; }
+
+    /* Card */
+    .card { border: 1px solid #e2e8f0; background: #fff; border-radius: 24px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+    .card-header { display: flex; flex-direction: column; gap: 16px; margin-bottom: 20px; }
+    @media (min-width: 640px) { .card-header { flex-direction: row; align-items: flex-start; justify-content: space-between; } }
+    .card-icon-title { display: flex; gap: 16px; }
+    .card-icon { width: 48px; height: 48px; flex-shrink: 0; background: #0f172a; border-radius: 16px; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .card-icon svg { width: 20px; height: 20px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .card-badge { display: inline-block; background: #f1f5f9; color: #475569; border-radius: 999px; padding: 3px 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+    .card-title { font-size: 22px; font-weight: 600; letter-spacing: -0.02em; color: #020617; }
+    .card-subtitle { margin-top: 4px; font-size: 13px; color: #94a3b8; }
+    pre.prompt-content { background: #0f172a; border-radius: 16px; padding: 20px; font-size: 13px; line-height: 1.65; color: #e2e8f0; white-space: pre-wrap; word-break: break-word; max-height: 460px; overflow-y: auto; font-family: "Menlo", "Consolas", monospace; }
+    pre.prompt-content::-webkit-scrollbar { width: 6px; }
+    pre.prompt-content::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+
+    /* Empty state */
+    .empty-state { border: 1.5px dashed #cbd5e1; background: #fff; border-radius: 24px; padding: 48px 24px; text-align: center; color: #94a3b8; font-size: 14px; }
+
+    /* Table */
+    .table-wrapper { overflow: hidden; border: 1px solid #e2e8f0; border-radius: 16px; }
+    table { width: 100%; border-collapse: collapse; background: #fff; font-size: 13px; }
+    thead { background: #f1f5f9; text-align: left; color: #475569; }
+    th { padding: 10px 16px; font-weight: 600; }
+    td { padding: 10px 16px; color: #334155; border-top: 1px solid #e2e8f0; }
+    td.mono { font-family: "Menlo", "Consolas", monospace; color: #475569; }
+
+    /* Sidebar */
+    .sidebar { position: sticky; top: 80px; display: flex; flex-direction: column; gap: 20px; }
+    .sidebar-card { border: 1px solid #e2e8f0; background: #fff; border-radius: 24px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+    .sidebar-title { font-size: 14px; font-weight: 600; color: #020617; }
+    .phrase-list { margin-top: 14px; display: flex; flex-direction: column; gap: 8px; }
+    .phrase-item { background: #f8fafc; border-radius: 12px; padding: 8px 12px; font-size: 13px; color: #334155; }
+    .warn-card { border: 1px solid #fde68a; background: #fffbeb; border-radius: 24px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+    .warn-title { font-size: 14px; font-weight: 600; color: #78350f; }
+    .warn-desc { margin-top: 8px; font-size: 13px; line-height: 1.7; color: #92400e; }
+    .warn-tags { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .warn-tag { background: #fff; border: 1px solid #fde68a; border-radius: 999px; padding: 3px 12px; font-size: 11px; font-weight: 500; color: #92400e; }
+    .dark-card { border: 1px solid #e2e8f0; background: #0f172a; border-radius: 24px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); color: #fff; }
+    .dark-card-title { font-size: 14px; font-weight: 600; }
+    .dark-card-desc { margin-top: 10px; font-size: 13px; line-height: 1.75; color: #94a3b8; }
+
+    /* Copy button */
+    .copy-btn { display: inline-flex; align-items: center; gap: 6px; border: 1px solid #e2e8f0; background: #fff; border-radius: 999px; padding: 6px 14px; font-size: 13px; font-weight: 500; color: #334155; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: background 0.15s; white-space: nowrap; }
+    .copy-btn:hover { background: #f8fafc; }
+    .copy-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+    .copy-btn.copied { color: #16a34a; border-color: #bbf7d0; background: #f0fdf4; }
+
+    /* hidden */
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<!-- ========== HEADER ========== -->
+<header>
+  <div class="header-inner">
+    <div class="badge-top">
+      <svg viewBox="0 0 24 24" width="16" height="16" stroke="#475569" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446A9 9 0 1 1 12 3Z"/><path d="M15 12h.01"/><path d="M12 15h.01"/><path d="M9 12h.01"/></svg>
+      Optical Tweezers Manuscript Polishing Prompt Kit
+    </div>
+    <div class="header-grid">
+      <div>
+        <h1>光镊操控文章 AI 润色提示词工具页</h1>
+        <p class="header-desc">面向 ACS Nano、Opto-Electronic Science、Nature Photonics、Light: Science &amp; Applications 等期刊风格，强调客观叙述、顶刊表达、机制清晰、适度包装，并减少主动 "we" 表达。</p>
+      </div>
+      <div class="tip-box">
+        <div class="tip-box-title">使用建议</div>
+        <div class="tip-box-desc">先用"通用全文润色提示词"统一风格；摘要、引言、结果、结论分别用对应提示词二次精修。遇到表述太保守的段落，再使用"更强包装版本"。</div>
+        <div class="btn-wrap">
+          <button class="copy-btn" id="copy-all-btn" onclick="copyAll()">
+            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <span>复制全部 Prompt</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ========== NAVBAR ========== -->
+<div class="navbar">
+  <div class="navbar-inner">
+    <nav class="nav-links">
+      <a class="nav-link" href="#full">通用全文润色</a>
+      <a class="nav-link" href="#abstract">摘要</a>
+      <a class="nav-link" href="#intro">引言</a>
+      <a class="nav-link" href="#results">结果与讨论</a>
+      <a class="nav-link" href="#conclusion">结论</a>
+      <a class="nav-link" href="#strong">更强包装版本</a>
+    </nav>
+    <input class="search-input" id="search-input" placeholder="搜索：摘要、结果、we、hedging..." oninput="filterSections()" />
+  </div>
+</div>
+
+<!-- ========== MAIN ========== -->
+<div class="main-grid">
+  <div class="sections-col" id="sections-col">
+
+    <!-- 1. Full Manuscript -->
+    <section class="card scroll-mt-24" id="full" data-text="通用全文润色提示词 适合整篇 manuscript 的统一润色 Full Manuscript">
+      <div class="card-header">
+        <div class="card-icon-title">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+          </div>
+          <div>
+            <div class="card-badge">Full Manuscript</div>
+            <div class="card-title">通用全文润色提示词</div>
+            <div class="card-subtitle">适合整篇 manuscript 的统一润色</div>
+          </div>
+        </div>
+        <button class="copy-btn" onclick="copyPrompt('prompt-full', this)">
+          <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span>复制</span>
+        </button>
+      </div>
+      <pre class="prompt-content" id="prompt-full">You are an expert scientific editor specializing in high-impact optics, nanophotonics, optical manipulation, and interdisciplinary journals such as ACS Nano, Light: Science & Applications, Nature Photonics, and Opto-Electronic Science.
+
+Please polish the following manuscript text to meet the writing standards of top-tier journals.
+
+Writing requirements:
+1. Use a polished, authoritative, and high-impact scientific style.
+2. Make the argument more compelling and better packaged, while preserving the original scientific meaning.
+3. Reduce the use of active first-person expressions such as "we demonstrate", "we show", "we find", and "we propose". Prefer objective constructions such as "This work demonstrates", "The results reveal", "The platform enables", "The strategy provides", or passive/object-centered expressions.
+4. Avoid overly cautious language. Reduce unnecessary hedging such as "may", "might", "could", "possibly", and "to some extent", unless scientific uncertainty is essential.
+5. Strengthen the significance, novelty, and broader implications of the work in a reasonable way, without inventing results, mechanisms, or claims not supported by the original text.
+6. Avoid overly long or complicated sentences. Split dense sentences into clear, concise, and logically connected statements.
+7. Avoid excessive use of em dashes. Use commas, semicolons, or separate sentences instead.
+8. Preserve all technical terms, equations, symbols, abbreviations, figure references, and citation placeholders.
+9. Improve logical flow between sentences and paragraphs.
+10. Make the tone suitable for submission to ACS Nano or Opto-Electronic Science.
+
+Please output:
+- A polished version of the text.
+- A short list of the main changes made.
+- Any places where the original claim seems scientifically weak, overstated, or unclear.</pre>
+    </section>
+
+    <!-- 2. Abstract -->
+    <section class="card scroll-mt-24" id="abstract" data-text="摘要专用提示词 强化问题 机制 结果与意义 Abstract">
+      <div class="card-header">
+        <div class="card-icon-title">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
+          </div>
+          <div>
+            <div class="card-badge">Abstract</div>
+            <div class="card-title">摘要专用提示词</div>
+            <div class="card-subtitle">强化问题、机制、结果与意义</div>
+          </div>
+        </div>
+        <button class="copy-btn" onclick="copyPrompt('prompt-abstract', this)">
+          <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span>复制</span>
+        </button>
+      </div>
+      <pre class="prompt-content" id="prompt-abstract">Please polish the following abstract for submission to ACS Nano or Opto-Electronic Science.
+
+Target style:
+- High-impact, concise, and conceptually clear.
+- Emphasize the central physical mechanism, the key technical advance, and the broader significance.
+- Reduce first-person expressions.
+- Strengthen novelty and importance without unsupported exaggeration.
+- Avoid long sentences and excessive hedging.
+- Make the abstract read like a strong top-journal abstract in nanophotonics, optical manipulation, or optomechanics.
+
+Please ensure that the abstract clearly answers:
+1. What is the key problem or limitation?
+2. What is the new strategy or platform?
+3. What physical mechanism enables the result?
+4. What is experimentally or theoretically demonstrated?
+5. Why does this matter for optical manipulation, nanophotonics, or programmable matter control?
+
+Keep the original technical meaning, data, and conclusions unchanged.</pre>
+    </section>
+
+    <!-- 3. Introduction -->
+    <section class="card scroll-mt-24" id="intro" data-text="引言专用提示词 形成问题 瓶颈 突破 意义的叙事链 Introduction">
+      <div class="card-header">
+        <div class="card-icon-title">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div>
+            <div class="card-badge">Introduction</div>
+            <div class="card-title">引言专用提示词</div>
+            <div class="card-subtitle">形成问题—瓶颈—突破—意义的叙事链</div>
+          </div>
+        </div>
+        <button class="copy-btn" onclick="copyPrompt('prompt-intro', this)">
+          <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span>复制</span>
+        </button>
+      </div>
+      <pre class="prompt-content" id="prompt-intro">Please polish the following Introduction section for a high-impact journal.
+
+The revised Introduction should:
+1. Build a clear and persuasive narrative from the broader field to the specific problem.
+2. Present optical tweezers and optical manipulation as an important platform, but clearly identify their current limitations.
+3. Highlight why the proposed approach offers a substantial conceptual or functional advance.
+4. Avoid sounding incremental.
+5. Improve the transitions between paragraphs.
+6. Reduce repeated use of "we".
+7. Use confident but scientifically defensible language.
+8. Avoid excessive hedging and overly complex sentences.
+9. Preserve all citations and technical details.
+
+The final paragraph should clearly state the central contribution, key mechanism, and potential impact of the work.</pre>
+    </section>
+
+    <!-- 4. Results & Discussion -->
+    <section class="card scroll-mt-24" id="results" data-text="结果与讨论专用提示词 突出物理解释 力场逻辑与功能验证 Results Discussion">
+      <div class="card-header">
+        <div class="card-icon-title">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z"/><path d="M7 7h.01"/></svg>
+          </div>
+          <div>
+            <div class="card-badge">Results &amp; Discussion</div>
+            <div class="card-title">结果与讨论专用提示词</div>
+            <div class="card-subtitle">突出物理解释、力场逻辑与功能验证</div>
+          </div>
+        </div>
+        <button class="copy-btn" onclick="copyPrompt('prompt-results', this)">
+          <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span>复制</span>
+        </button>
+      </div>
+      <pre class="prompt-content" id="prompt-results">Please polish the following Results and Discussion section.
+
+Editing goals:
+1. Make the physical interpretation clearer and more rigorous.
+2. Strengthen the connection between field distribution, optical force, particle dynamics, and manipulation functionality.
+3. Improve the logical sequence from observation to mechanism to implication.
+4. Reduce first-person active phrasing.
+5. Use strong object-centered expressions, such as:
+   - "The field distribution reveals..."
+   - "The force landscape establishes..."
+   - "The particle trajectory confirms..."
+   - "The symmetry breaking gives rise to..."
+   - "The platform enables..."
+6. Avoid unsupported claims and do not invent new results.
+7. Replace vague statements with precise physical descriptions where possible.
+8. Split long sentences into shorter, clearer sentences.
+9. Avoid excessive em dashes.
+10. Maintain a top-journal tone suitable for ACS Nano or Opto-Electronic Science.</pre>
+    </section>
+
+    <!-- 5. Conclusion -->
+    <section class="card scroll-mt-24" id="conclusion" data-text="结论专用提示词 适度拔高 但避免空泛口号 Conclusion">
+      <div class="card-header">
+        <div class="card-icon-title">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <div class="card-badge">Conclusion</div>
+            <div class="card-title">结论专用提示词</div>
+            <div class="card-subtitle">适度拔高，但避免空泛口号</div>
+          </div>
+        </div>
+        <button class="copy-btn" onclick="copyPrompt('prompt-conclusion', this)">
+          <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span>复制</span>
+        </button>
+      </div>
+      <pre class="prompt-content" id="prompt-conclusion">Please polish the following Conclusion section for a high-impact optics or nanophotonics journal.
+
+The conclusion should:
+1. Summarize the central advance in a concise and authoritative way.
+2. Emphasize the physical mechanism and functional capability of the platform.
+3. Strengthen the broader implications for optical manipulation, programmable optical forces, nanophotonic tweezers, or particle control.
+4. Avoid excessive caution.
+5. Avoid overuse of "we".
+6. Avoid generic closing sentences.
+7. Make the final sentence forward-looking, but scientifically grounded.
+
+Do not introduce unsupported applications or claims that are not present in the manuscript.</pre>
+    </section>
+
+    <!-- 6. High-impact Framing -->
+    <section class="card scroll-mt-24" id="strong" data-text="更强包装版本提示词 用于增强顶刊感与概念框架 High-impact Framing">
+      <div class="card-header">
+        <div class="card-icon-title">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
+          </div>
+          <div>
+            <div class="card-badge">High-impact Framing</div>
+            <div class="card-title">更强包装版本提示词</div>
+            <div class="card-subtitle">用于增强顶刊感与概念框架</div>
+          </div>
+        </div>
+        <button class="copy-btn" onclick="copyPrompt('prompt-strong', this)">
+          <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span>复制</span>
+        </button>
+      </div>
+      <pre class="prompt-content" id="prompt-strong">Please revise the following text with a stronger high-impact journal style.
+
+Make the text more compelling, more conceptually framed, and more suitable for a top-tier journal. The writing should emphasize the novelty, mechanism, and significance of the work more clearly than the original version.
+
+Important constraints:
+- Do not fabricate data, methods, mechanisms, or applications.
+- Do not make claims that are unsupported by the provided text.
+- However, do not be overly conservative. Strengthen the framing where the original text is too modest.
+- Replace weak expressions with stronger but defensible alternatives.
+- Reduce "we"-centered writing.
+- Avoid long, overloaded sentences.
+- Avoid excessive em dashes.
+- Keep the tone objective, precise, and authoritative.
+
+Please provide a polished version and explain which claims were strengthened.</pre>
+    </section>
+
+    <!-- 7. Replacement table -->
+    <section class="card" id="replacements">
+      <div style="margin-bottom:20px; display:flex; align-items:flex-start; justify-content:space-between; gap:16px;">
+        <div>
+          <h2 class="card-title">替代表达规则</h2>
+          <p class="card-subtitle" style="margin-top:4px;">用于减少主动第一人称，使语言更客观。</p>
+        </div>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>原表达</th><th>推荐替换</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="mono">We demonstrate...</td><td>This work demonstrates... / The results demonstrate...</td></tr>
+            <tr><td class="mono">We show that...</td><td>The results show that... / The analysis reveals that...</td></tr>
+            <tr><td class="mono">We propose...</td><td>A ... strategy is proposed... / This study introduces...</td></tr>
+            <tr><td class="mono">We find that...</td><td>It is found that... / The results reveal that...</td></tr>
+            <tr><td class="mono">Our platform enables...</td><td>The platform enables...</td></tr>
+            <tr><td class="mono">Our results suggest...</td><td>These results indicate... / These findings establish...</td></tr>
+            <tr><td class="mono">We believe...</td><td>Remove it or replace it with an evidence-based statement</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- empty state -->
+    <div class="empty-state hidden" id="empty-state">没有匹配的提示词。可以尝试搜索 "abstract"、"results" 或 "we"。</div>
+  </div>
+
+  <!-- ========== SIDEBAR ========== -->
+  <aside class="sidebar">
+    <div class="sidebar-card">
+      <div class="sidebar-title">推荐高阶表达</div>
+      <div class="phrase-list">
+        <div class="phrase-item">This platform enables...</div>
+        <div class="phrase-item">The results establish...</div>
+        <div class="phrase-item">The field topology gives rise to...</div>
+        <div class="phrase-item">The force landscape reveals...</div>
+        <div class="phrase-item">The symmetry-controlled response provides...</div>
+        <div class="phrase-item">The approach provides a route to...</div>
+        <div class="phrase-item">The mechanism offers a general strategy for...</div>
+        <div class="phrase-item">These findings extend optical manipulation from... to...</div>
+      </div>
+    </div>
+
+    <div class="warn-card">
+      <div class="warn-title">谨慎使用</div>
+      <div class="warn-desc">除非证据非常强，否则避免使用过度营销式词汇。</div>
+      <div class="warn-tags">
+        <span class="warn-tag">revolutionary</span>
+        <span class="warn-tag">unprecedented</span>
+        <span class="warn-tag">groundbreaking</span>
+        <span class="warn-tag">paradigm-shifting</span>
+        <span class="warn-tag">game-changing</span>
+      </div>
+    </div>
+
+    <div class="dark-card">
+      <div class="dark-card-title">核心写作原则</div>
+      <div class="dark-card-desc">Confident but defensible. 顶刊表达不是堆砌形容词，而是让机制、证据、功能和意义之间的逻辑更紧密。</div>
+    </div>
+  </aside>
+</div>
+
+<script>
+  // ---- Search / filter ----
+  function filterSections() {
+    const q = document.getElementById('search-input').value.trim().toLowerCase();
+    const sections = document.querySelectorAll('#sections-col section.card[data-text], #sections-col section.card[id="replacements"]');
+    let visible = 0;
+    sections.forEach(sec => {
+      const text = (sec.dataset.text || '') + ' ' + (sec.innerText || '');
+      if (!q || text.toLowerCase().includes(q)) {
+        sec.classList.remove('hidden');
+        visible++;
+      } else {
+        sec.classList.add('hidden');
+      }
+    });
+    document.getElementById('empty-state').classList.toggle('hidden', visible > 0);
+  }
+
+  // ---- Copy single prompt ----
+  function copyPrompt(preId, btn) {
+    const text = document.getElementById(preId).textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      const span = btn.querySelector('span');
+      const svg = btn.querySelector('svg');
+      btn.classList.add('copied');
+      span.textContent = '已复制';
+      svg.innerHTML = '<polyline points="20 6 9 17 4 12"/>';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        span.textContent = '复制';
+        svg.innerHTML = '<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>';
+      }, 1400);
+    });
+  }
+
+  // ---- Copy all prompts ----
+  function copyAll() {
+    const ids = ['prompt-full','prompt-abstract','prompt-intro','prompt-results','prompt-conclusion','prompt-strong'];
+    const titles = ['通用全文润色提示词','摘要专用提示词','引言专用提示词','结果与讨论专用提示词','结论专用提示词','更强包装版本提示词'];
+    const all = ids.map((id, i) => `# ${titles[i]}\n\n${document.getElementById(id).textContent}`).join('\n\n---\n\n');
+    const btn = document.getElementById('copy-all-btn');
+    const span = btn.querySelector('span');
+    navigator.clipboard.writeText(all).then(() => {
+      btn.classList.add('copied');
+      span.textContent = '已复制全部';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        span.textContent = '复制全部 Prompt';
+      }, 1500);
+    });
+  }
+</script>
+</body>
+</html>

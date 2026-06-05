@@ -13,7 +13,7 @@ Henan Polytechnic University, *June 2018*
 ## Experience
 
 **Associate Researcher**  
-School of Physics, Chengdu University of Technology, *May 2026 – Present*
+School of Physics, Chengdu University of Technology, *June 2026 – Present*
 - Collaborator: Prof. Fangwei Ye
 - Research: Structured Light Manipulation, Optical Trapping, Topological Photonics
 

@@ -1,7 +1,7 @@
 [site]
 title = "X² 实验室"
 description = "成都理工大学物理学院副研究员"
-last_updated = "2026年4月"
+last_updated = "2026年6月"
 
 [author]
 name = "谢希"
@@ -41,3 +41,9 @@ title = "简历"
 type = "page"
 target = "cv"
 href = "/cv"
+
+[[navigation]]
+title = "AI 提示词"
+type = "link"
+target = "ai-prompts"
+href = "/tools/optical_tweezers_prompt.html"
