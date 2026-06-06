@@ -38,6 +38,7 @@ export default function Profile({ author, social, features, researchInterests }:
     const messages = useMessages();
 
     const [hasLiked, setHasLiked] = useState(false);
+    const [likeCount, setLikeCount] = useState(0);
     const [showThanks, setShowThanks] = useState(false);
     const [showAddress, setShowAddress] = useState(false);
     const [isAddressPinned, setIsAddressPinned] = useState(false);
@@ -45,28 +46,52 @@ export default function Profile({ author, social, features, researchInterests }:
     const [isEmailPinned, setIsEmailPinned] = useState(false);
     const [lastClickedTooltip, setLastClickedTooltip] = useState<'email' | 'address' | null>(null);
 
-    // Check local storage for user's like status
+    // Fetch like count from API and check if current user has liked
     useEffect(() => {
         if (!features.enable_likes) return;
 
-        const userHasLiked = localStorage.getItem('jiale-website-user-liked');
-        if (userHasLiked === 'true') {
-            setHasLiked(true);
-        }
+        fetch('/api/likes')
+            .then(res => res.json())
+            .then(data => {
+                setHasLiked(data.liked);
+                setLikeCount(data.count);
+            })
+            .catch(() => {
+                // Fallback to localStorage if API unavailable
+                const userHasLiked = localStorage.getItem('jiale-website-user-liked');
+                if (userHasLiked === 'true') {
+                    setHasLiked(true);
+                }
+            });
     }, [features.enable_likes]);
 
     const handleLike = () => {
-        const newLikedState = !hasLiked;
-        setHasLiked(newLikedState);
+        fetch('/api/likes', { method: 'POST' })
+            .then(res => res.json())
+            .then(data => {
+                setHasLiked(data.liked);
+                setLikeCount(data.count);
 
-        if (newLikedState) {
-            localStorage.setItem('jiale-website-user-liked', 'true');
-            setShowThanks(true);
-            setTimeout(() => setShowThanks(false), 2000);
-        } else {
-            localStorage.removeItem('jiale-website-user-liked');
-            setShowThanks(false);
-        }
+                if (data.liked) {
+                    setShowThanks(true);
+                    setTimeout(() => setShowThanks(false), 2000);
+                } else {
+                    setShowThanks(false);
+                }
+            })
+            .catch(() => {
+                // Fallback to localStorage if API unavailable
+                const newLikedState = !hasLiked;
+                setHasLiked(newLikedState);
+                if (newLikedState) {
+                    localStorage.setItem('jiale-website-user-liked', 'true');
+                    setShowThanks(true);
+                    setTimeout(() => setShowThanks(false), 2000);
+                } else {
+                    localStorage.removeItem('jiale-website-user-liked');
+                    setShowThanks(false);
+                }
+            });
     };
 
     const socialLinks = [
@@ -334,6 +359,9 @@ export default function Profile({ author, social, features, researchInterests }:
                                 <HeartIcon className="h-4 w-4" />
                             )}
                             <span>{hasLiked ? messages.profile.liked : messages.profile.like}</span>
+                            {likeCount > 0 && (
+                                <span className="ml-1 text-xs opacity-75">({likeCount})</span>
+                            )}
                         </motion.button>
 
                         {/* Thanks bubble */}
