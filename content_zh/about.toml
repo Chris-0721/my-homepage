@@ -28,3 +28,9 @@ id = "news"
 type = "list"
 source = "news.toml"
 title = "最新动态"
+
+[[sections]]
+id = "research_news"
+type = "gallery"
+source = "research_news.toml"
+title = "科研动态"

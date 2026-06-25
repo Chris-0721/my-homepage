@@ -2,13 +2,14 @@ import { getConfig } from '@/lib/config';
 import { getMarkdownContent, getBibtexContent, getTomlContent, getPageConfig } from '@/lib/content';
 import { parseBibTeX } from '@/lib/bibtexParser';
 import HomePageClient, { type HomePageLocaleData } from '@/components/home/HomePageClient';
+import type { ResearchNewsItem } from '@/components/home/ResearchNews';
 import { Publication } from '@/types/publication';
 import { BasePageConfig, PublicationPageConfig, TextPageConfig, CardPageConfig } from '@/types/page';
 import { getRuntimeI18nConfig } from '@/lib/i18n/config';
 
 interface SectionConfig {
   id: string;
-  type: 'markdown' | 'publications' | 'list';
+  type: 'markdown' | 'publications' | 'list' | 'gallery';
   title?: string;
   source?: string;
   filter?: string;
@@ -16,6 +17,7 @@ interface SectionConfig {
   content?: string;
   publications?: Publication[];
   items?: NewsItem[];
+  galleryItems?: ResearchNewsItem[];
 }
 
 interface NewsItem {
@@ -53,6 +55,13 @@ function processSections(sections: SectionConfig[], locale?: string): SectionCon
         return {
           ...section,
           items: newsData?.news || [],
+        };
+      }
+      case 'gallery': {
+        const galleryData = section.source ? getTomlContent<{ news: ResearchNewsItem[] }>(section.source, locale) : null;
+        return {
+          ...section,
+          galleryItems: galleryData?.news || [],
         };
       }
       default:

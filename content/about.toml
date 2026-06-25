@@ -28,3 +28,9 @@ id = "news"
 type = "list"
 source = "news.toml"
 title = "News"
+
+[[sections]]
+id = "research_news"
+type = "gallery"
+source = "research_news.toml"
+title = "Research Highlights"
