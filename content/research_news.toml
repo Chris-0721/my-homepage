@@ -16,26 +16,3 @@ journal = "Advanced Materials (2026)"
 image = "/News/AM.jpg"
 description = "Flexible metasurfaces for robust generation of microwave skyrmions with free-form designs."
 
-[[news]]
-title = "Structureless excitation and manipulation of dynamic holographic plasmonic slides"
-journal = "Nature Communications (2026)"
-image = "/News/NC.png"
-description = "Dynamic holographic plasmonic slides with structureless excitation and manipulation."
-
-[[news]]
-title = "Topological magnetic lattices for on-chip nanoparticle trapping and sorting"
-journal = "Nano Letters (2025)"
-image = "/News/NL.png"
-description = "On-chip nanoparticle trapping and sorting using topological magnetic lattices."
-
-[[news]]
-title = "Generation and transformation of topological textures via spin-orbit interaction in bulk crystals"
-journal = "Physical Review Applied (2026)"
-image = "/News/PR.png"
-description = "Topological texture generation and transformation through spin-orbit interaction in bulk crystals."
-
-[[news]]
-title = "Vortex 6.0 all-on-chip"
-journal = "Light: Science & Applications (2025)"
-image = "/News/light.png"
-description = "All-on-chip vortex generation and manipulation at the nanoscale."
