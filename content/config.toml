@@ -72,7 +72,7 @@ target = "cv"
 href = "/cv"
 
 [[navigation]]
-title = "AI Prompts"
+title = "AI SKILL"
 type = "link"
-target = "ai-prompts"
-href = "/tools/optical_tweezers_prompt.html"
+target = "ai-skill"
+href = "/tools/ai_skills.html"

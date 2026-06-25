@@ -15,3 +15,27 @@ title = "自由形态柔性超表面稳健产生微波斯格明子"
 journal = "Advanced Materials (2026)"
 image = "/News/AM.jpg"
 description = "柔性超表面实现自由形态设计的微波斯格明子稳健产生。"
+
+[[news]]
+title = "动态全息等离子体幻灯片的结构无关激发与操控"
+journal = "Nature Communications (2026)"
+image = "/News/NC.png"
+description = "无结构依赖的动态全息等离子体幻灯片激发与操控。"
+
+[[news]]
+title = "拓扑磁晶格用于片上纳米颗粒捕获与分选"
+journal = "Nano Letters (2025)"
+image = "/News/NL.png"
+description = "利用拓扑磁晶格实现片上纳米颗粒的捕获与分选。"
+
+[[news]]
+title = "体晶体中自旋轨道耦合产生与转化拓扑纹理"
+journal = "Physical Review Applied (2026)"
+image = "/News/PR.png"
+description = "通过体晶体中自旋轨道耦合产生和转化拓扑纹理。"
+
+[[news]]
+title = "Vortex 6.0 全芯片集成"
+journal = "Light: Science & Applications (2025)"
+image = "/News/light.png"
+description = "纳米尺度全芯片涡旋产生与操控。"

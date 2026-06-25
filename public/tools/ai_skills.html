@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI SKILL — Academic Writing &amp; Review Toolkit</title>
+  <style>
+    *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+    :root {
+      --bg: #f8fafc; --card: #fff; --text: #0f172a; --muted: #475569; --faint: #94a3b8;
+      --border: #e2e8f0; --accent: #0f172a; --accent-light: #f1f5f9;
+      --warn-bg: #fffbeb; --warn-border: #fde68a; --warn-text: #92400e;
+    }
+    body { font-family: "Noto Serif SC", "Source Han Serif SC", Georgia, "Times New Roman", serif; background:var(--bg); color:var(--text); min-height:100vh; -webkit-font-smoothing:antialiased; }
+    a { text-decoration:none; color:inherit; }
+    code, pre, .mono, table { font-family: "JetBrains Mono", "Cascadia Code", "Menlo", "Consolas", monospace; }
+
+    /* ── Header ── */
+    header { border-bottom:1px solid var(--border); background:rgba(255,255,255,0.94); backdrop-filter:blur(10px); }
+    .hdr { max-width:960px; margin:0 auto; padding:56px 24px 40px; }
+    .hdr-badge { display:inline-flex; align-items:center; gap:8px; border:1px solid var(--border); padding:5px 14px; border-radius:999px; font-size:13px; font-weight:500; color:var(--muted); margin-bottom:20px; font-family:system-ui,sans-serif; }
+    .hdr h1 { font-size:clamp(32px,5vw,48px); font-weight:700; letter-spacing:-0.03em; color:#020617; }
+    .hdr-desc { margin-top:16px; font-size:16px; line-height:1.85; color:var(--muted); max-width:680px; }
+    .hdr-meta { margin-top:20px; display:flex; flex-wrap:wrap; gap:12px; font-size:13px; color:var(--faint); font-family:system-ui,sans-serif; }
+    .hdr-meta span { background:var(--accent-light); border-radius:8px; padding:6px 14px; }
+
+    /* ── Category Tabs ── */
+    .cat-nav { position:sticky; top:0; z-index:100; border-bottom:1px solid var(--border); background:rgba(255,255,255,0.97); backdrop-filter:blur(10px); }
+    .cat-inner { max-width:960px; margin:0 auto; padding:0 24px; display:flex; gap:0; }
+    .cat-btn { flex:1; max-width:240px; padding:18px 24px; font-size:15px; font-weight:700; color:var(--faint); background:none; border:none; border-bottom:2px solid transparent; cursor:pointer; transition:all 0.2s; text-align:center; letter-spacing:-0.01em; font-family:inherit; }
+    .cat-btn:hover { color:var(--muted); }
+    .cat-btn.active { color:var(--accent); border-bottom-color:var(--accent); }
+
+    /* ── Main ── */
+    .wrap { max-width:960px; margin:0 auto; padding:36px 24px; }
+    .sections-col { display:flex; flex-direction:column; gap:24px; }
+    .category { display:none; }
+    .category.active { display:block; }
+
+    /* ── Card ── */
+    .card { border:1px solid var(--border); background:var(--card); border-radius:16px; padding:28px; }
+    .card-header { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:16px; flex-wrap:wrap; }
+    .card-label { display:inline-block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted); margin-bottom:6px; font-family:system-ui,sans-serif; }
+    .card h2 { font-size:22px; font-weight:700; letter-spacing:-0.02em; color:#020617; }
+    .card h3 { font-size:17px; font-weight:700; color:#020617; margin-bottom:8px; padding-bottom:8px; border-bottom:1px solid var(--border); }
+
+    /* ── Prompt code block ── */
+    pre.prompt-cb { background:#0f172a; border-radius:12px; padding:20px; font-size:13px; line-height:1.6; color:#e2e8f0; white-space:pre-wrap; word-break:break-word; max-height:460px; overflow-y:auto; font-family:"JetBrains Mono","Cascadia Code","Menlo","Consolas",monospace; }
+    pre.prompt-cb::-webkit-scrollbar { width:5px; }
+    pre.prompt-cb::-webkit-scrollbar-thumb { background:#334155; border-radius:3px; }
+
+    /* ── Review outline ── */
+    .rv-block { margin-bottom:20px; }
+    .rv-block:last-child { margin-bottom:0; }
+    .rv-block h4 { font-size:15px; font-weight:700; color:#020617; margin-bottom:6px; }
+    .rv-block p, .rv-block li { font-size:14px; line-height:1.85; color:var(--muted); }
+    .rv-block ul { margin-left:20px; }
+    .rv-block ul li { margin-bottom:4px; }
+    .rv-divider { border:none; border-top:1px solid var(--border); margin:20px 0; }
+
+    /* ── Table ── */
+    .tbl-wrap { overflow:hidden; border:1px solid var(--border); border-radius:12px; }
+    table { width:100%; border-collapse:collapse; background:var(--card); font-size:13px; }
+    thead { background:var(--accent-light); text-align:left; color:var(--muted); }
+    th { padding:10px 16px; font-weight:600; font-family:system-ui,sans-serif; }
+    td { padding:10px 16px; color:#334155; border-top:1px solid var(--border); }
+    td.mono { font-family:"JetBrains Mono","Cascadia Code","Menlo",monospace; color:var(--muted); }
+    .highlight { background:#fef3c7; padding:1px 6px; border-radius:4px; font-weight:600; color:#78350f; }
+
+    /* ── Inline reference chips ── */
+    .chip-row { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+    .chip { background:var(--accent-light); border-radius:8px; padding:6px 14px; font-size:13px; color:var(--muted); font-family:system-ui,sans-serif; }
+
+    /* ── Copy button ── */
+    .copy-btn { display:inline-flex; align-items:center; gap:6px; border:1px solid var(--border); background:var(--card); border-radius:999px; padding:6px 14px; font-size:13px; font-weight:500; color:#334155; cursor:pointer; transition:all 0.15s; white-space:nowrap; font-family:system-ui,sans-serif; flex-shrink:0; }
+    .copy-btn:hover { background:var(--accent-light); border-color:#94a3b8; }
+    .copy-btn.copied { color:#16a34a; border-color:#bbf7d0; background:#f0fdf4; }
+    .copy-btn svg { width:14px; height:14px; }
+    .copy-btn.copied svg { display:none; }
+
+    /* ── Sub-nav chips ── */
+    .sub-nav { display:flex; gap:8px; overflow-x:auto; margin-bottom:28px; }
+    .sub-nav::-webkit-scrollbar { height:3px; }
+    .sub-nav::-webkit-scrollbar-thumb { background:#cbd5e1; border-radius:2px; }
+    .sub-link { flex-shrink:0; border:1px solid var(--border); border-radius:999px; padding:6px 16px; font-size:13px; font-weight:500; color:var(--muted); cursor:pointer; transition:all 0.15s; white-space:nowrap; font-family:system-ui,sans-serif; }
+    .sub-link:hover { border-color:var(--accent); color:var(--text); }
+
+    .hidden { display:none !important; }
+    .scroll-mt-24 { scroll-margin-top:100px; }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════ HEADER ═══════════════ -->
+<header>
+  <div class="hdr">
+    <div class="hdr-badge">Academic AI Toolkit</div>
+    <h1>AI SKILL</h1>
+    <p class="hdr-desc">面向微纳光学与光学操控领域的 AI 辅助工具集。覆盖论文写作润色与高水平期刊审稿两大场景，对标 Light: Science &amp; Applications、Nature Photonics、ACS Nano 等期刊标准。</p>
+    <div class="hdr-meta">
+      <span>适用领域：微纳光场调控 · 光学操控 · 纳米光子学 · 超构表面 · 光力学</span>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════ CATEGORY TABS ═══════════════ -->
+<nav class="cat-nav">
+  <div class="cat-inner">
+    <button class="cat-btn active" onclick="switchCat('writing')">写作润色</button>
+    <button class="cat-btn" onclick="switchCat('review')">审稿辅助</button>
+  </div>
+</nav>
+
+<!-- ═══════════════ CATEGORY: WRITING ═══════════════ -->
+<div class="category active" id="cat-writing">
+  <div class="wrap">
+    <div class="sub-nav">
+      <a class="sub-link" href="#full">通用全文润色</a>
+      <a class="sub-link" href="#abstract">摘要</a>
+      <a class="sub-link" href="#intro">引言</a>
+      <a class="sub-link" href="#results">结果与讨论</a>
+      <a class="sub-link" href="#conclusion">结论</a>
+      <a class="sub-link" href="#strong">更强包装版本</a>
+      <a class="sub-link" href="#replacements">替代表达规则</a>
+    </div>
+
+    <div class="sections-col">
+
+      <section class="card scroll-mt-24" id="full">
+        <div class="card-header">
+          <div><div class="card-label">Full Manuscript</div><h2>通用全文润色提示词</h2></div>
+          <button class="copy-btn" onclick="copyText(this,'prompt-full')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>复制</span></button>
+        </div>
+        <pre class="prompt-cb" id="prompt-full">You are an expert scientific editor specializing in high-impact optics, nanophotonics, optical manipulation, and interdisciplinary journals such as ACS Nano, Light: Science &amp; Applications, Nature Photonics, and Opto-Electronic Science.
+
+Please polish the following manuscript text to meet the writing standards of top-tier journals.
+
+Writing requirements:
+1. Use a polished, authoritative, and high-impact scientific style.
+2. Make the argument more compelling and better packaged, while preserving the original scientific meaning.
+3. Reduce the use of active first-person expressions such as "we demonstrate", "we show", "we find", and "we propose". Prefer objective constructions such as "This work demonstrates", "The results reveal", "The platform enables", "The strategy provides", or passive/object-centered expressions.
+4. Avoid overly cautious language. Reduce unnecessary hedging such as "may", "might", "could", "possibly", and "to some extent", unless scientific uncertainty is essential.
+5. Strengthen the significance, novelty, and broader implications of the work in a reasonable way, without inventing results, mechanisms, or claims not supported by the original text.
+6. Avoid overly long or complicated sentences. Split dense sentences into clear, concise, and logically connected statements.
+7. Avoid excessive use of em dashes. Use commas, semicolons, or separate sentences instead.
+8. Preserve all technical terms, equations, symbols, abbreviations, figure references, and citation placeholders.
+9. Improve logical flow between sentences and paragraphs.
+10. Make the tone suitable for submission to ACS Nano or Opto-Electronic Science.
+
+Please output:
+- A polished version of the text.
+- A short list of the main changes made.
+- Any places where the original claim seems scientifically weak, overstated, or unclear.</pre>
+      </section>
+
+      <section class="card scroll-mt-24" id="abstract">
+        <div class="card-header">
+          <div><div class="card-label">Abstract</div><h2>摘要专用提示词</h2></div>
+          <button class="copy-btn" onclick="copyText(this,'prompt-abstract')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>复制</span></button>
+        </div>
+        <pre class="prompt-cb" id="prompt-abstract">Please polish the following abstract for submission to ACS Nano or Opto-Electronic Science.
+
+Target style:
+- High-impact, concise, and conceptually clear.
+- Emphasize the central physical mechanism, the key technical advance, and the broader significance.
+- Reduce first-person expressions.
+- Strengthen novelty and importance without unsupported exaggeration.
+- Avoid long sentences and excessive hedging.
+- Make the abstract read like a strong top-journal abstract in nanophotonics, optical manipulation, or optomechanics.
+
+Please ensure that the abstract clearly answers:
+1. What is the key problem or limitation?
+2. What is the new strategy or platform?
+3. What physical mechanism enables the result?
+4. What is experimentally or theoretically demonstrated?
+5. Why does this matter for optical manipulation, nanophotonics, or programmable matter control?
+
+Keep the original technical meaning, data, and conclusions unchanged.</pre>
+      </section>
+
+      <section class="card scroll-mt-24" id="intro">
+        <div class="card-header">
+          <div><div class="card-label">Introduction</div><h2>引言专用提示词</h2></div>
+          <button class="copy-btn" onclick="copyText(this,'prompt-intro')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>复制</span></button>
+        </div>
+        <pre class="prompt-cb" id="prompt-intro">Please polish the following Introduction section for a high-impact journal.
+
+The revised Introduction should:
+1. Build a clear and persuasive narrative from the broader field to the specific problem.
+2. Present optical tweezers and optical manipulation as an important platform, but clearly identify their current limitations.
+3. Highlight why the proposed approach offers a substantial conceptual or functional advance.
+4. Avoid sounding incremental.
+5. Improve the transitions between paragraphs.
+6. Reduce repeated use of "we".
+7. Use confident but scientifically defensible language.
+8. Avoid excessive hedging and overly complex sentences.
+9. Preserve all citations and technical details.
+
+The final paragraph should clearly state the central contribution, key mechanism, and potential impact of the work.</pre>
+      </section>
+
+      <section class="card scroll-mt-24" id="results">
+        <div class="card-header">
+          <div><div class="card-label">Results &amp; Discussion</div><h2>结果与讨论专用提示词</h2></div>
+          <button class="copy-btn" onclick="copyText(this,'prompt-results')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>复制</span></button>
+        </div>
+        <pre class="prompt-cb" id="prompt-results">Please polish the following Results and Discussion section.
+
+Editing goals:
+1. Make the physical interpretation clearer and more rigorous.
+2. Strengthen the connection between field distribution, optical force, particle dynamics, and manipulation functionality.
+3. Improve the logical sequence from observation to mechanism to implication.
+4. Reduce first-person active phrasing.
+5. Use strong object-centered expressions, such as:
+   - "The field distribution reveals..."
+   - "The force landscape establishes..."
+   - "The particle trajectory confirms..."
+   - "The symmetry breaking gives rise to..."
+   - "The platform enables..."
+6. Avoid unsupported claims and do not invent new results.
+7. Replace vague statements with precise physical descriptions where possible.
+8. Split long sentences into shorter, clearer sentences.
+9. Avoid excessive em dashes.
+10. Maintain a top-journal tone suitable for ACS Nano or Opto-Electronic Science.</pre>
+      </section>
+
+      <section class="card scroll-mt-24" id="conclusion">
+        <div class="card-header">
+          <div><div class="card-label">Conclusion</div><h2>结论专用提示词</h2></div>
+          <button class="copy-btn" onclick="copyText(this,'prompt-conclusion')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>复制</span></button>
+        </div>
+        <pre class="prompt-cb" id="prompt-conclusion">Please polish the following Conclusion section for a high-impact optics or nanophotonics journal.
+
+The conclusion should:
+1. Summarize the central advance in a concise and authoritative way.
+2. Emphasize the physical mechanism and functional capability of the platform.
+3. Strengthen the broader implications for optical manipulation, programmable optical forces, nanophotonic tweezers, or particle control.
+4. Avoid excessive caution.
+5. Avoid overuse of "we".
+6. Avoid generic closing sentences.
+7. Make the final sentence forward-looking, but scientifically grounded.
+
+Do not introduce unsupported applications or claims that are not present in the manuscript.</pre>
+      </section>
+
+      <section class="card scroll-mt-24" id="strong">
+        <div class="card-header">
+          <div><div class="card-label">High-impact Framing</div><h2>更强包装版本提示词</h2></div>
+          <button class="copy-btn" onclick="copyText(this,'prompt-strong')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>复制</span></button>
+        </div>
+        <pre class="prompt-cb" id="prompt-strong">Please revise the following text with a stronger high-impact journal style.
+
+Make the text more compelling, more conceptually framed, and more suitable for a top-tier journal. The writing should emphasize the novelty, mechanism, and significance of the work more clearly than the original version.
+
+Important constraints:
+- Do not fabricate data, methods, mechanisms, or applications.
+- Do not make claims that are unsupported by the provided text.
+- However, do not be overly conservative. Strengthen the framing where the original text is too modest.
+- Replace weak expressions with stronger but defensible alternatives.
+- Reduce "we"-centered writing.
+- Avoid long, overloaded sentences.
+- Avoid excessive em dashes.
+- Keep the tone objective, precise, and authoritative.
+
+Please provide a polished version and explain which claims were strengthened.</pre>
+      </section>
+
+      <!-- Writing tips: merged from old sidebar -->
+      <section class="card scroll-mt-24" id="replacements">
+        <div style="margin-bottom:20px;">
+          <div class="card-label">Style Reference</div>
+          <h2>替代表达规则 &amp; 写作要点</h2>
+        </div>
+
+        <div class="tbl-wrap" style="margin-bottom:24px;">
+          <table>
+            <thead><tr><th>避免使用</th><th>推荐替换</th></tr></thead>
+            <tbody>
+              <tr><td class="mono">We demonstrate…</td><td>This work demonstrates… / The results demonstrate…</td></tr>
+              <tr><td class="mono">We show that…</td><td>The results show that… / The analysis reveals that…</td></tr>
+              <tr><td class="mono">We propose…</td><td>A … strategy is proposed… / This study introduces…</td></tr>
+              <tr><td class="mono">We find that…</td><td>It is found that… / The results reveal that…</td></tr>
+              <tr><td class="mono">We believe…</td><td>Remove or replace with evidence-based statement</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>推荐高阶表达</h3>
+        <div class="chip-row">
+          <span class="chip">This platform enables…</span>
+          <span class="chip">The field topology gives rise to…</span>
+          <span class="chip">The force landscape reveals…</span>
+          <span class="chip">The symmetry-controlled response provides…</span>
+          <span class="chip">The mechanism offers a general strategy for…</span>
+          <span class="chip">These findings extend optical manipulation from… to…</span>
+        </div>
+
+        <h3 style="margin-top:24px;">谨慎使用的过度营销词汇</h3>
+        <div class="chip-row">
+          <span class="chip" style="background:#fffbeb;border:1px solid #fde68a;color:#92400e;">revolutionary</span>
+          <span class="chip" style="background:#fffbeb;border:1px solid #fde68a;color:#92400e;">unprecedented</span>
+          <span class="chip" style="background:#fffbeb;border:1px solid #fde68a;color:#92400e;">groundbreaking</span>
+          <span class="chip" style="background:#fffbeb;border:1px solid #fde68a;color:#92400e;">paradigm-shifting</span>
+          <span class="chip" style="background:#fffbeb;border:1px solid #fde68a;color:#92400e;">game-changing</span>
+        </div>
+        <p style="margin-top:12px;font-size:14px;color:#92400e;line-height:1.8;">顶刊表达不是堆砌形容词，而是让机制、证据、功能和意义之间的逻辑更紧密。Confident but defensible.</p>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ CATEGORY: REVIEW ═══════════════ -->
+<div class="category" id="cat-review">
+  <div class="wrap">
+    <div class="sub-nav">
+      <a class="sub-link" href="#rev-full">完整审稿提示词</a>
+      <a class="sub-link" href="#rev-structure">输出结构总览</a>
+    </div>
+
+    <div class="sections-col">
+
+      <!-- Main reviewer prompt -->
+      <section class="card scroll-mt-24" id="rev-full">
+        <div class="card-header">
+          <div><div class="card-label">Reviewer Prompt</div><h2>微纳光场调控与光学操控审稿提示词</h2></div>
+          <button class="copy-btn" onclick="copyText(this,'prompt-review')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>复制</span></button>
+        </div>
+        <pre class="prompt-cb" id="prompt-review">请你扮演一位在微纳光场调控与光学操控领域具有国际影响力的资深审稿人，审稿标准对标 Physical Review Letters、Light: Science &amp; Applications、Nature Photonics 等高水平期刊。
+
+我将提供一篇稿件的全文、摘要或部分内容。请你从以下角度进行严格、专业、批判性审稿：
+
+### 1. 科学问题与创新性
+- 该工作解决的核心科学问题是否重要？
+- 相比已有研究，真正的新意在哪里？
+- 是否只是已有方法的组合、工程优化或参数调节？
+- 是否达到了 PRL / Light 水平所要求的概念突破、机制创新或普适意义？
+
+### 2. 物理机制与理论深度
+- 作者对微纳光场调控、光-物质相互作用、光力/光矩、轨道角动量、自旋-轨道耦合、近场增强、梯度力/散射力等机制的解释是否充分？
+- 是否存在物理图像不清、概念混淆、推导跳跃或解释过度的问题？
+- 理论模型、数值仿真和实验现象之间是否自洽？
+
+### 3. 方法与技术路线
+- 实验设计、仿真方法、边界条件、材料参数、光场入射条件、粒子模型、介质环境等是否合理？
+- 是否需要补充对照实验、误差分析、参数扫描或统计结果？
+- 光场调控结构的设计是否具有普适性，还是仅针对特定参数调优？
+
+### 4. 结果可靠性与证据强度
+- 关键结论是否由数据充分支撑？
+- 是否存在选择性展示最优结果的问题？
+- 是否需要补充重复性、稳定性、噪声、热效应、布朗运动、光热效应、流体扰动或样品不均匀性的讨论？
+
+### 5. 与已有文献的关系
+- 作者是否充分引用并区分了已有工作？
+- 是否遗漏了关键文献？
+- 该工作与已有成果相比，优势是否被定量证明？
+
+### 6. 论文表达与逻辑
+- 摘要、引言、结果、讨论和结论是否逻辑清晰？
+- 是否存在夸大表述、概念不严谨、标题过度包装或结论超出数据的问题？
+
+---
+
+请按以下格式输出审稿意见：
+
+### 一、总体评价
+用审稿人语气给出整体判断，包括科学意义、创新程度、完成度和是否达到高水平期刊要求。
+
+### 二、主要问题 Major Concerns
+提出不少于 6 条主要问题。每条包括：问题描述、为什么严重、作者需如何修改、是否影响核心结论。
+
+### 三、次要问题 Minor Concerns
+提出不少于 6 条次要问题（文字表述、图表标注、单位、符号、实验细节、引用、术语准确性等）。
+
+### 四、建议作者补充的关键实验或仿真
+列出最应该补充的实验/理论分析/数值仿真（参数扫描、对照结构、不同条件验证、光热效应排除、力场定量计算等）。
+
+### 五、可直接询问作者的问题
+给出不少于 10 个可写入审稿意见的具体问题，语气专业、尖锐但公正。
+
+### 六、创新性判断
+明确判断创新性属于：
+A. 概念性突破，适合 PRL / Light 级别
+B. 有一定新意，但需大幅强化物理机制和证据链
+C. 主要是工程优化或已有方法组合
+D. 创新性不足，建议转投专业领域期刊
+请说明理由。
+
+### 七、推荐审稿结论
+从以下选择一个并说明理由：Accept / Minor Revision / Major Revision / Reject and Resubmit / Reject。
+
+---
+
+审稿标准：
+- 不要泛泛而谈，不要只给表面建议
+- 每个主要问题都应指向论文的核心科学性或可靠性
+- 对创新性判断要严格
+- 对物理机制、实验可靠性和文献对比要尤其敏感
+- 语言风格应接近真实高水平期刊审稿意见
+- 请以高水平期刊审稿人的标准判断，不要过于宽松</pre>
+      </section>
+
+      <!-- Merged review structure outline -->
+      <section class="card scroll-mt-24" id="rev-structure">
+        <div class="card-label" style="margin-bottom:6px;">Output Structure</div>
+        <h2 style="margin-bottom:20px;">输出结构总览</h2>
+
+        <div class="rv-block">
+          <h4>一、总体评价</h4>
+          <p>从科学意义、创新程度、完成度三个维度给出整体判断，判断该工作是否达到 PRL / Light 级别期刊要求。</p>
+        </div>
+        <hr class="rv-divider">
+
+        <div class="rv-block">
+          <h4>二、主要问题 Major Concerns（≥ 6 条）</h4>
+          <p>每条包括：问题描述、为什么严重、修改建议、是否影响核心结论。重点关注：</p>
+          <ul>
+            <li><span class="highlight">创新性</span> — 是否仅是已有方法的组合或工程优化</li>
+            <li><span class="highlight">物理机制</span> — 光-物质相互作用、力场逻辑是否自洽</li>
+            <li><span class="highlight">证据链</span> — 关键结论是否被数据充分支撑</li>
+            <li><span class="highlight">对照实验</span> — 是否缺少与已有方法的定量比较</li>
+            <li><span class="highlight">文献区分</span> — 与已有工作是否充分区分</li>
+          </ul>
+        </div>
+        <hr class="rv-divider">
+
+        <div class="rv-block">
+          <h4>三、次要问题 Minor Concerns（≥ 6 条）</h4>
+          <p>文字表述、图表标注、单位符号、实验细节、参考文献、术语准确性等。</p>
+        </div>
+        <hr class="rv-divider">
+
+        <div class="rv-block">
+          <h4>四、建议补充的关键实验/仿真</h4>
+          <ul>
+            <li>参数扫描（粒径、折射率、波长）</li>
+            <li>对照结构 / 对照实验</li>
+            <li>光功率依赖 / 光热效应排除</li>
+            <li>布朗运动与稳定性分析</li>
+            <li>力场势阱深度、捕获刚度或力矩的定量计算</li>
+            <li>与已有方法的定量比较</li>
+          </ul>
+        </div>
+        <hr class="rv-divider">
+
+        <div class="rv-block">
+          <h4>五、可直接询问作者的问题（≥ 10 个）</h4>
+          <p>语气专业、尖锐但公正。示例："作者如何排除光热效应对粒子运动的贡献？""光场分布与实际粒子受力之间是否存在直接对应关系？""与传统光镊、等离激元光镊相比，优势在哪里？"</p>
+        </div>
+        <hr class="rv-divider">
+
+        <div class="rv-block">
+          <h4>六、创新性判断</h4>
+          <ul>
+            <li><strong>A.</strong> 概念性突破，适合 PRL / Light 级别</li>
+            <li><strong>B.</strong> 有一定新意，但需大幅强化物理机制和证据链</li>
+            <li><strong>C.</strong> 主要是工程优化或已有方法组合</li>
+            <li><strong>D.</strong> 创新性不足，建议转投专业领域期刊</li>
+          </ul>
+        </div>
+        <hr class="rv-divider">
+
+        <div class="rv-block">
+          <h4>七、推荐审稿结论</h4>
+          <p><strong>Accept</strong> / <strong>Minor Revision</strong> / <strong>Major Revision</strong> / <strong>Reject and Resubmit</strong> / <strong>Reject</strong> — 以高水平期刊标准判断，不过于宽松。</p>
+        </div>
+
+        <hr class="rv-divider">
+        <div class="chip-row">
+          <span class="chip">对标：PRL</span>
+          <span class="chip">Light: Science &amp; Applications</span>
+          <span class="chip">Nature Photonics</span>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<script>
+function switchCat(c){document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.category').forEach(c=>c.classList.remove('active'));document.getElementById('cat-'+c).classList.add('active');document.querySelector('.cat-btn[onclick*="'+c+'"]').classList.add('active');}
+function copyText(b,i){var t=document.getElementById(i).textContent;navigator.clipboard.writeText(t).then(function(){b.classList.add('copied');b.querySelector('span').textContent='已复制';setTimeout(function(){b.classList.remove('copied');b.querySelector('span').textContent='复制';},1400);});}
+</script>
+</body>
+</html>
