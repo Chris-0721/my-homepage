@@ -7,86 +7,108 @@
   <style>
     *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
     :root {
-      --bg: #f8fafc; --card: #fff; --text: #0f172a; --muted: #475569; --faint: #94a3b8;
-      --border: #e2e8f0; --accent: #0f172a; --accent-light: #f1f5f9;
-      --warn-bg: #fffbeb; --warn-border: #fde68a; --warn-text: #92400e;
+      --c-bg: #f5f4f0; --c-card: #ffffff; --c-text: #1a1a18; --c-muted: #5c5b57; --c-faint: #8e8d89;
+      --c-border: #dbdad6; --c-accent: #1a1a18; --c-accent-soft: #eeede9;
+      --c-warn-bg: #faf6ee; --c-warn-border: #e8d9b5; --c-warn-tx: #6b4d2a;
+      --c-code-bg: #141311; --c-code-tx: #dedbd6;
     }
-    body { font-family: "Noto Serif SC", "Source Han Serif SC", Georgia, "Times New Roman", serif; background:var(--bg); color:var(--text); min-height:100vh; -webkit-font-smoothing:antialiased; }
+    html { scroll-behavior:smooth; }
+    body { font-family: "Noto Serif SC", "Source Han Serif SC", Georgia, "Times New Roman", serif; background:var(--c-bg); color:var(--c-text); min-height:100vh; -webkit-font-smoothing:antialiased; line-height:1.75; }
     a { text-decoration:none; color:inherit; }
-    code, pre, .mono, table { font-family: "JetBrains Mono", "Cascadia Code", "Menlo", "Consolas", monospace; }
+    code, pre, .mono { font-family: "JetBrains Mono", "Cascadia Code", "Menlo", "Consolas", monospace; }
+    ::selection { background:var(--c-text); color:var(--c-bg); }
 
     /* ── Header ── */
-    header { border-bottom:1px solid var(--border); background:rgba(255,255,255,0.94); backdrop-filter:blur(10px); }
-    .hdr { max-width:960px; margin:0 auto; padding:56px 24px 40px; }
-    .hdr-badge { display:inline-flex; align-items:center; gap:8px; border:1px solid var(--border); padding:5px 14px; border-radius:999px; font-size:13px; font-weight:500; color:var(--muted); margin-bottom:20px; font-family:system-ui,sans-serif; }
-    .hdr h1 { font-size:clamp(32px,5vw,48px); font-weight:700; letter-spacing:-0.03em; color:#020617; }
-    .hdr-desc { margin-top:16px; font-size:16px; line-height:1.85; color:var(--muted); max-width:680px; }
-    .hdr-meta { margin-top:20px; display:flex; flex-wrap:wrap; gap:12px; font-size:13px; color:var(--faint); font-family:system-ui,sans-serif; }
-    .hdr-meta span { background:var(--accent-light); border-radius:8px; padding:6px 14px; }
+    header { border-bottom:1px solid var(--c-border); background:rgba(255,255,255,0.92); backdrop-filter:blur(12px); }
+    .hdr { max-width:880px; margin:0 auto; padding:64px 24px 48px; }
+    .hdr-badge { display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:500; color:var(--c-muted); letter-spacing:0.04em; margin-bottom:24px; padding:5px 0; font-family:system-ui,sans-serif; }
+    .hdr-badge::before { content:''; width:20px; height:1px; background:var(--c-muted); }
+    .hdr h1 { font-size:clamp(36px,6vw,56px); font-weight:800; letter-spacing:-0.04em; color:var(--c-text); line-height:1.1; }
+    .hdr-desc { margin-top:20px; font-size:16px; line-height:1.85; color:var(--c-muted); max-width:620px; }
+    .hdr-meta { margin-top:20px; display:flex; flex-wrap:wrap; gap:10px; font-size:13px; color:var(--c-faint); font-family:system-ui,sans-serif; }
 
     /* ── Category Tabs ── */
-    .cat-nav { position:sticky; top:0; z-index:100; border-bottom:1px solid var(--border); background:rgba(255,255,255,0.97); backdrop-filter:blur(10px); }
-    .cat-inner { max-width:960px; margin:0 auto; padding:0 24px; display:flex; gap:0; }
-    .cat-btn { flex:1; max-width:240px; padding:18px 24px; font-size:15px; font-weight:700; color:var(--faint); background:none; border:none; border-bottom:2px solid transparent; cursor:pointer; transition:all 0.2s; text-align:center; letter-spacing:-0.01em; font-family:inherit; }
-    .cat-btn:hover { color:var(--muted); }
-    .cat-btn.active { color:var(--accent); border-bottom-color:var(--accent); }
+    .cat-nav { position:sticky; top:0; z-index:100; border-bottom:1px solid var(--c-border); background:rgba(255,255,255,0.96); backdrop-filter:blur(12px); }
+    .cat-inner { max-width:880px; margin:0 auto; padding:0 24px; display:flex; gap:0; }
+    .cat-btn { flex:1; max-width:220px; padding:20px 24px; font-size:15px; font-weight:700; color:var(--c-faint); background:none; border:none; border-bottom:2px solid transparent; cursor:pointer; transition:all 0.25s; text-align:center; letter-spacing:-0.01em; font-family:inherit; }
+    .cat-btn:hover { color:var(--c-muted); }
+    .cat-btn.active { color:var(--c-text); border-bottom-color:var(--c-text); }
 
-    /* ── Main ── */
-    .wrap { max-width:960px; margin:0 auto; padding:36px 24px; }
-    .sections-col { display:flex; flex-direction:column; gap:24px; }
+    /* ── Wrap ── */
+    .wrap { max-width:880px; margin:0 auto; padding:40px 24px 80px; }
+    .sections-col { display:flex; flex-direction:column; gap:16px; }
     .category { display:none; }
     .category.active { display:block; }
 
+    /* ── Toolbar ── */
+    .toolbar { display:flex; align-items:center; gap:12px; margin-bottom:28px; flex-wrap:wrap; }
+    .toolbar-actions { display:flex; gap:8px; margin-left:auto; }
+    .sub-link { flex-shrink:0; border:1px solid var(--c-border); border-radius:999px; padding:7px 18px; font-size:13px; font-weight:500; color:var(--c-muted); cursor:pointer; transition:all 0.2s; white-space:nowrap; font-family:system-ui,sans-serif; background:var(--c-card); }
+    .sub-link:hover, .sub-link.on { border-color:var(--c-text); color:var(--c-text); background:var(--c-accent-soft); }
+    .btn-all { display:inline-flex; align-items:center; gap:6px; border:1.5px solid var(--c-text); background:var(--c-text); color:#fff; border-radius:999px; padding:8px 20px; font-size:13px; font-weight:600; cursor:pointer; transition:all 0.2s; white-space:nowrap; font-family:system-ui,sans-serif; letter-spacing:-0.01em; }
+    .btn-all:hover { opacity:0.85; transform:scale(1.02); }
+    .btn-all:active { transform:scale(0.98); }
+    .btn-all.done { background:#166534; border-color:#166534; }
+    .search-wrap { position:relative; flex:1; min-width:160px; }
+    .search-wrap input { width:100%; border:1px solid var(--c-border); border-radius:999px; padding:8px 16px 8px 36px; font-size:13px; color:var(--c-text); background:var(--c-card); outline:none; transition:border 0.2s; font-family:system-ui,sans-serif; }
+    .search-wrap input::placeholder { color:var(--c-faint); }
+    .search-wrap input:focus { border-color:var(--c-text); }
+    .search-wrap svg { position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--c-faint); }
+
     /* ── Card ── */
-    .card { border:1px solid var(--border); background:var(--card); border-radius:16px; padding:28px; }
-    .card-header { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:16px; flex-wrap:wrap; }
-    .card-label { display:inline-block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted); margin-bottom:6px; font-family:system-ui,sans-serif; }
-    .card h2 { font-size:22px; font-weight:700; letter-spacing:-0.02em; color:#020617; }
-    .card h3 { font-size:17px; font-weight:700; color:#020617; margin-bottom:8px; padding-bottom:8px; border-bottom:1px solid var(--border); }
+    .card { border:1px solid var(--c-border); background:var(--c-card); border-radius:12px; overflow:hidden; transition:border-color 0.2s; }
+    .card:hover { border-color:#b8b5ae; }
+    .card-hd { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; padding:20px 24px 0; }
+    .card-hd h2 { font-size:17px; font-weight:700; letter-spacing:-0.02em; color:var(--c-text); }
+    .card-hd .lbl { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--c-faint); margin-bottom:4px; font-family:system-ui,sans-serif; }
+    .card-copy { display:inline-flex; align-items:center; gap:5px; border:1px solid var(--c-border); background:var(--c-card); border-radius:999px; padding:6px 16px; font-size:12px; font-weight:500; color:var(--c-muted); cursor:pointer; transition:all 0.2s; white-space:nowrap; font-family:system-ui,sans-serif; flex-shrink:0; margin-top:4px; }
+    .card-copy:hover { border-color:var(--c-text); color:var(--c-text); }
+    .card-copy.copied { color:#15803d; border-color:#86efac; background:#f0fdf4; }
 
-    /* ── Prompt code block ── */
-    pre.prompt-cb { background:#0f172a; border-radius:12px; padding:20px; font-size:13px; line-height:1.6; color:#e2e8f0; white-space:pre-wrap; word-break:break-word; max-height:460px; overflow-y:auto; font-family:"JetBrains Mono","Cascadia Code","Menlo","Consolas",monospace; }
-    pre.prompt-cb::-webkit-scrollbar { width:5px; }
-    pre.prompt-cb::-webkit-scrollbar-thumb { background:#334155; border-radius:3px; }
+    /* ── Collapsible prompt body ── */
+    .card-body { max-height:0; overflow:hidden; transition:max-height 0.35s ease; }
+    .card-body.open { max-height:3000px; }
+    .card-toggle { display:inline-flex; align-items:center; gap:4px; font-size:12px; font-weight:500; color:var(--c-faint); cursor:pointer; padding:4px 0; transition:color 0.2s; font-family:system-ui,sans-serif; margin-left:24px; margin-bottom:8px; }
+    .card-toggle:hover { color:var(--c-muted); }
+    .card-toggle svg { width:12px; height:12px; transition:transform 0.3s; }
+    .card-toggle.open svg { transform:rotate(180deg); }
 
-    /* ── Review outline ── */
-    .rv-block { margin-bottom:20px; }
-    .rv-block:last-child { margin-bottom:0; }
-    .rv-block h4 { font-size:15px; font-weight:700; color:#020617; margin-bottom:6px; }
-    .rv-block p, .rv-block li { font-size:14px; line-height:1.85; color:var(--muted); }
-    .rv-block ul { margin-left:20px; }
-    .rv-block ul li { margin-bottom:4px; }
-    .rv-divider { border:none; border-top:1px solid var(--border); margin:20px 0; }
+    /* ── Code block ── */
+    pre.pb { background:var(--c-code-bg); margin:16px 24px 24px; border-radius:8px; padding:20px; font-size:13px; line-height:1.6; color:var(--c-code-tx); white-space:pre-wrap; word-break:break-word; font-family:"JetBrains Mono","Cascadia Code","Menlo",monospace; }
+    pre.pb::-webkit-scrollbar { width:5px; }
+    pre.pb::-webkit-scrollbar-thumb { background:#3a3733; border-radius:3px; }
+
+    /* ── Review blocks ── */
+    .rv-block { padding:16px 0; }
+    .rv-block + .rv-block { border-top:1px solid var(--c-border); }
+    .rv-block h4 { font-size:14px; font-weight:700; color:var(--c-text); margin-bottom:4px; }
+    .rv-block p, .rv-block li { font-size:13px; line-height:1.85; color:var(--c-muted); }
+    .rv-block ul { margin:8px 0 0 18px; }
+    .rv-block ul li { margin-bottom:2px; }
 
     /* ── Table ── */
-    .tbl-wrap { overflow:hidden; border:1px solid var(--border); border-radius:12px; }
-    table { width:100%; border-collapse:collapse; background:var(--card); font-size:13px; }
-    thead { background:var(--accent-light); text-align:left; color:var(--muted); }
+    .tbl { overflow:hidden; border:1px solid var(--c-border); border-radius:8px; margin-top:16px; }
+    table { width:100%; border-collapse:collapse; font-size:13px; }
+    thead { background:var(--c-accent-soft); text-align:left; color:var(--c-muted); }
     th { padding:10px 16px; font-weight:600; font-family:system-ui,sans-serif; }
-    td { padding:10px 16px; color:#334155; border-top:1px solid var(--border); }
-    td.mono { font-family:"JetBrains Mono","Cascadia Code","Menlo",monospace; color:var(--muted); }
-    .highlight { background:#fef3c7; padding:1px 6px; border-radius:4px; font-weight:600; color:#78350f; }
+    td { padding:10px 16px; color:#3d3c38; border-top:1px solid var(--c-border); font-family:system-ui,sans-serif; }
+    td:first-child { font-family:"JetBrains Mono","Cascadia Code",monospace; color:var(--c-muted); }
+    .hl { background:#f9f3e4; padding:1px 6px; border-radius:3px; font-weight:600; color:var(--c-warn-tx); }
 
-    /* ── Inline reference chips ── */
-    .chip-row { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
-    .chip { background:var(--accent-light); border-radius:8px; padding:6px 14px; font-size:13px; color:var(--muted); font-family:system-ui,sans-serif; }
+    /* ── Chips ── */
+    .chip-row { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+    .chip { background:var(--c-accent-soft); border-radius:6px; padding:6px 14px; font-size:12px; color:var(--c-muted); font-family:system-ui,sans-serif; }
 
-    /* ── Copy button ── */
-    .copy-btn { display:inline-flex; align-items:center; gap:6px; border:1px solid var(--border); background:var(--card); border-radius:999px; padding:6px 14px; font-size:13px; font-weight:500; color:#334155; cursor:pointer; transition:all 0.15s; white-space:nowrap; font-family:system-ui,sans-serif; flex-shrink:0; }
-    .copy-btn:hover { background:var(--accent-light); border-color:#94a3b8; }
-    .copy-btn.copied { color:#16a34a; border-color:#bbf7d0; background:#f0fdf4; }
-    .copy-btn svg { width:14px; height:14px; }
-    .copy-btn.copied svg { display:none; }
+    /* ── Toast ── */
+    .toast { position:fixed; bottom:40px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--c-text); color:var(--c-bg); padding:12px 28px; border-radius:999px; font-size:14px; font-weight:500; font-family:system-ui,sans-serif; z-index:999; opacity:0; transition:all 0.3s cubic-bezier(0.16,1,0.3,1); pointer-events:none; }
+    .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
 
-    /* ── Sub-nav chips ── */
-    .sub-nav { display:flex; gap:8px; overflow-x:auto; margin-bottom:28px; }
-    .sub-nav::-webkit-scrollbar { height:3px; }
-    .sub-nav::-webkit-scrollbar-thumb { background:#cbd5e1; border-radius:2px; }
-    .sub-link { flex-shrink:0; border:1px solid var(--border); border-radius:999px; padding:6px 16px; font-size:13px; font-weight:500; color:var(--muted); cursor:pointer; transition:all 0.15s; white-space:nowrap; font-family:system-ui,sans-serif; }
-    .sub-link:hover { border-color:var(--accent); color:var(--text); }
+    /* ── Kbd hint ── */
+    .kbd { display:inline-block; border:1px solid var(--c-border); border-radius:4px; padding:1px 7px; font-size:11px; font-family:system-ui,sans-serif; color:var(--c-faint); margin:0 2px; }
+    .hint { font-size:12px; color:var(--c-faint); font-family:system-ui,sans-serif; margin-top:48px; text-align:center; }
 
     .hidden { display:none !important; }
-    .scroll-mt-24 { scroll-margin-top:100px; }
+    .scroll-mt { scroll-margin-top:120px; }
   </style>
 </head>
 <body>
@@ -96,10 +118,8 @@
   <div class="hdr">
     <div class="hdr-badge">Academic AI Toolkit</div>
     <h1>AI SKILL</h1>
-    <p class="hdr-desc">面向微纳光学与光学操控领域的 AI 辅助工具集。覆盖论文写作润色与高水平期刊审稿两大场景，对标 Light: Science &amp; Applications、Nature Photonics、ACS Nano 等期刊标准。</p>
-    <div class="hdr-meta">
-      <span>适用领域：微纳光场调控 · 光学操控 · 纳米光子学 · 超构表面 · 光力学</span>
-    </div>
+    <p class="hdr-desc">面向微纳光学与光学操控领域的 AI 辅助工具集。覆盖论文写作润色与高水平期刊审稿两大场景。</p>
+    <div class="hdr-meta">微纳光场调控 · 光学操控 · 纳米光子学 · 超构表面 · 光力学</div>
   </div>
 </header>
 
@@ -114,24 +134,24 @@
 <!-- ═══════════════ CATEGORY: WRITING ═══════════════ -->
 <div class="category active" id="cat-writing">
   <div class="wrap">
-    <div class="sub-nav">
-      <a class="sub-link" href="#full">通用全文润色</a>
-      <a class="sub-link" href="#abstract">摘要</a>
-      <a class="sub-link" href="#intro">引言</a>
-      <a class="sub-link" href="#results">结果与讨论</a>
-      <a class="sub-link" href="#conclusion">结论</a>
-      <a class="sub-link" href="#strong">更强包装版本</a>
-      <a class="sub-link" href="#replacements">替代表达规则</a>
+    <div class="toolbar">
+      <div class="search-wrap"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input placeholder="搜索提示词…" oninput="filterWriting(this.value)"></div>
+      <div class="toolbar-actions">
+        <a class="sub-link" href="#full">全文</a>
+        <a class="sub-link" href="#abstract">摘要</a>
+        <a class="sub-link" href="#intro">引言</a>
+        <a class="sub-link" href="#results">结果</a>
+        <a class="sub-link" href="#conclusion">结论</a>
+        <a class="sub-link" href="#strong">包装</a>
+        <a class="sub-link" href="#replacements">表达</a>
+      </div>
+      <button class="btn-all" onclick="copyAllWriting()">复制全部</button>
     </div>
+    <div class="sections-col" id="writing-sections">
 
-    <div class="sections-col">
-
-      <section class="card scroll-mt-24" id="full">
-        <div class="card-header">
-          <div><div class="card-label">Full Manuscript</div><h2>通用全文润色提示词</h2></div>
-          <button class="copy-btn" onclick="copyText(this,'prompt-full')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>复制</span></button>
-        </div>
-        <pre class="prompt-cb" id="prompt-full">You are an expert scientific editor specializing in high-impact optics, nanophotonics, optical manipulation, and interdisciplinary journals such as ACS Nano, Light: Science &amp; Applications, Nature Photonics, and Opto-Electronic Science.
+      <section class="card scroll-mt" id="full" data-keywords="全文 通用 整篇 manuscript">
+        <div class="card-hd"><div><div class="lbl">Full Manuscript</div><h2>通用全文润色提示词</h2></div><button class="card-copy" onclick="copyOne(this,'prompt-full')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>复制</button></div>
+        <div class="card-body open"><pre class="pb" id="prompt-full">You are an expert scientific editor specializing in high-impact optics, nanophotonics, optical manipulation, and interdisciplinary journals such as ACS Nano, Light: Science & Applications, Nature Photonics, and Opto-Electronic Science.
 
 Please polish the following manuscript text to meet the writing standards of top-tier journals.
 
@@ -150,15 +170,13 @@ Writing requirements:
 Please output:
 - A polished version of the text.
 - A short list of the main changes made.
-- Any places where the original claim seems scientifically weak, overstated, or unclear.</pre>
+- Any places where the original claim seems scientifically weak, overstated, or unclear.</pre></div>
+        <div class="card-toggle open" onclick="toggleCard(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>收起</div>
       </section>
 
-      <section class="card scroll-mt-24" id="abstract">
-        <div class="card-header">
-          <div><div class="card-label">Abstract</div><h2>摘要专用提示词</h2></div>
-          <button class="copy-btn" onclick="copyText(this,'prompt-abstract')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>复制</span></button>
-        </div>
-        <pre class="prompt-cb" id="prompt-abstract">Please polish the following abstract for submission to ACS Nano or Opto-Electronic Science.
+      <section class="card scroll-mt" id="abstract" data-keywords="摘要 abstract">
+        <div class="card-hd"><div><div class="lbl">Abstract</div><h2>摘要专用提示词</h2></div><button class="card-copy" onclick="copyOne(this,'prompt-abstract')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>复制</button></div>
+        <div class="card-body open"><pre class="pb" id="prompt-abstract">Please polish the following abstract for submission to ACS Nano or Opto-Electronic Science.
 
 Target style:
 - High-impact, concise, and conceptually clear.
@@ -175,15 +193,13 @@ Please ensure that the abstract clearly answers:
 4. What is experimentally or theoretically demonstrated?
 5. Why does this matter for optical manipulation, nanophotonics, or programmable matter control?
 
-Keep the original technical meaning, data, and conclusions unchanged.</pre>
+Keep the original technical meaning, data, and conclusions unchanged.</pre></div>
+        <div class="card-toggle open" onclick="toggleCard(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>收起</div>
       </section>
 
-      <section class="card scroll-mt-24" id="intro">
-        <div class="card-header">
-          <div><div class="card-label">Introduction</div><h2>引言专用提示词</h2></div>
-          <button class="copy-btn" onclick="copyText(this,'prompt-intro')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>复制</span></button>
-        </div>
-        <pre class="prompt-cb" id="prompt-intro">Please polish the following Introduction section for a high-impact journal.
+      <section class="card scroll-mt" id="intro" data-keywords="引言 introduction 叙事">
+        <div class="card-hd"><div><div class="lbl">Introduction</div><h2>引言专用提示词</h2></div><button class="card-copy" onclick="copyOne(this,'prompt-intro')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>复制</button></div>
+        <div class="card-body open"><pre class="pb" id="prompt-intro">Please polish the following Introduction section for a high-impact journal.
 
 The revised Introduction should:
 1. Build a clear and persuasive narrative from the broader field to the specific problem.
@@ -196,15 +212,13 @@ The revised Introduction should:
 8. Avoid excessive hedging and overly complex sentences.
 9. Preserve all citations and technical details.
 
-The final paragraph should clearly state the central contribution, key mechanism, and potential impact of the work.</pre>
+The final paragraph should clearly state the central contribution, key mechanism, and potential impact of the work.</pre></div>
+        <div class="card-toggle open" onclick="toggleCard(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>收起</div>
       </section>
 
-      <section class="card scroll-mt-24" id="results">
-        <div class="card-header">
-          <div><div class="card-label">Results &amp; Discussion</div><h2>结果与讨论专用提示词</h2></div>
-          <button class="copy-btn" onclick="copyText(this,'prompt-results')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>复制</span></button>
-        </div>
-        <pre class="prompt-cb" id="prompt-results">Please polish the following Results and Discussion section.
+      <section class="card scroll-mt" id="results" data-keywords="结果 讨论 results discussion">
+        <div class="card-hd"><div><div class="lbl">Results &amp; Discussion</div><h2>结果与讨论专用提示词</h2></div><button class="card-copy" onclick="copyOne(this,'prompt-results')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>复制</button></div>
+        <div class="card-body open"><pre class="pb" id="prompt-results">Please polish the following Results and Discussion section.
 
 Editing goals:
 1. Make the physical interpretation clearer and more rigorous.
@@ -221,15 +235,13 @@ Editing goals:
 7. Replace vague statements with precise physical descriptions where possible.
 8. Split long sentences into shorter, clearer sentences.
 9. Avoid excessive em dashes.
-10. Maintain a top-journal tone suitable for ACS Nano or Opto-Electronic Science.</pre>
+10. Maintain a top-journal tone suitable for ACS Nano or Opto-Electronic Science.</pre></div>
+        <div class="card-toggle open" onclick="toggleCard(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>收起</div>
       </section>
 
-      <section class="card scroll-mt-24" id="conclusion">
-        <div class="card-header">
-          <div><div class="card-label">Conclusion</div><h2>结论专用提示词</h2></div>
-          <button class="copy-btn" onclick="copyText(this,'prompt-conclusion')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>复制</span></button>
-        </div>
-        <pre class="prompt-cb" id="prompt-conclusion">Please polish the following Conclusion section for a high-impact optics or nanophotonics journal.
+      <section class="card scroll-mt" id="conclusion" data-keywords="结论 conclusion">
+        <div class="card-hd"><div><div class="lbl">Conclusion</div><h2>结论专用提示词</h2></div><button class="card-copy" onclick="copyOne(this,'prompt-conclusion')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>复制</button></div>
+        <div class="card-body open"><pre class="pb" id="prompt-conclusion">Please polish the following Conclusion section for a high-impact optics or nanophotonics journal.
 
 The conclusion should:
 1. Summarize the central advance in a concise and authoritative way.
@@ -240,15 +252,13 @@ The conclusion should:
 6. Avoid generic closing sentences.
 7. Make the final sentence forward-looking, but scientifically grounded.
 
-Do not introduce unsupported applications or claims that are not present in the manuscript.</pre>
+Do not introduce unsupported applications or claims that are not present in the manuscript.</pre></div>
+        <div class="card-toggle open" onclick="toggleCard(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>收起</div>
       </section>
 
-      <section class="card scroll-mt-24" id="strong">
-        <div class="card-header">
-          <div><div class="card-label">High-impact Framing</div><h2>更强包装版本提示词</h2></div>
-          <button class="copy-btn" onclick="copyText(this,'prompt-strong')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>复制</span></button>
-        </div>
-        <pre class="prompt-cb" id="prompt-strong">Please revise the following text with a stronger high-impact journal style.
+      <section class="card scroll-mt" id="strong" data-keywords="包装 提升 framing high-impact">
+        <div class="card-hd"><div><div class="lbl">High-impact Framing</div><h2>更强包装版本提示词</h2></div><button class="card-copy" onclick="copyOne(this,'prompt-strong')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>复制</button></div>
+        <div class="card-body open"><pre class="pb" id="prompt-strong">Please revise the following text with a stronger high-impact journal style.
 
 Make the text more compelling, more conceptually framed, and more suitable for a top-tier journal. The writing should emphasize the novelty, mechanism, and significance of the work more clearly than the original version.
 
@@ -262,71 +272,61 @@ Important constraints:
 - Avoid excessive em dashes.
 - Keep the tone objective, precise, and authoritative.
 
-Please provide a polished version and explain which claims were strengthened.</pre>
+Please provide a polished version and explain which claims were strengthened.</pre></div>
+        <div class="card-toggle open" onclick="toggleCard(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>收起</div>
       </section>
 
-      <!-- Writing tips: merged from old sidebar -->
-      <section class="card scroll-mt-24" id="replacements">
-        <div style="margin-bottom:20px;">
-          <div class="card-label">Style Reference</div>
-          <h2>替代表达规则 &amp; 写作要点</h2>
-        </div>
-
-        <div class="tbl-wrap" style="margin-bottom:24px;">
-          <table>
+      <section class="card scroll-mt" id="replacements" data-keywords="替换 表达 规则 we 风格">
+        <div class="card-hd"><div><div class="lbl">Style Reference</div><h2>替代表达规则 &amp; 写作要点</h2></div></div>
+        <div style="padding:0 24px 24px;">
+          <div class="tbl"><table>
             <thead><tr><th>避免使用</th><th>推荐替换</th></tr></thead>
             <tbody>
-              <tr><td class="mono">We demonstrate…</td><td>This work demonstrates… / The results demonstrate…</td></tr>
-              <tr><td class="mono">We show that…</td><td>The results show that… / The analysis reveals that…</td></tr>
-              <tr><td class="mono">We propose…</td><td>A … strategy is proposed… / This study introduces…</td></tr>
-              <tr><td class="mono">We find that…</td><td>It is found that… / The results reveal that…</td></tr>
-              <tr><td class="mono">We believe…</td><td>Remove or replace with evidence-based statement</td></tr>
+              <tr><td>We demonstrate…</td><td>This work demonstrates… / The results demonstrate…</td></tr>
+              <tr><td>We show that…</td><td>The results show that… / The analysis reveals that…</td></tr>
+              <tr><td>We propose…</td><td>A … strategy is proposed… / This study introduces…</td></tr>
+              <tr><td>We find that…</td><td>It is found that… / The results reveal that…</td></tr>
+              <tr><td>We believe…</td><td>Remove or replace with evidence-based statement</td></tr>
             </tbody>
-          </table>
+          </table></div>
+          <h3 style="margin-top:24px;font-size:14px;color:var(--c-text);">推荐高阶表达</h3>
+          <div class="chip-row">
+            <span class="chip">This platform enables…</span><span class="chip">The field topology gives rise to…</span>
+            <span class="chip">The force landscape reveals…</span><span class="chip">The mechanism offers a general strategy for…</span>
+            <span class="chip">These findings extend optical manipulation from… to…</span>
+          </div>
+          <h3 style="margin-top:20px;font-size:14px;color:var(--c-text);">谨慎使用的过度营销词汇</h3>
+          <div class="chip-row">
+            <span class="chip" style="background:#f9f3e4;border:1px solid var(--c-warn-border);color:var(--c-warn-tx);">revolutionary</span>
+            <span class="chip" style="background:#f9f3e4;border:1px solid var(--c-warn-border);color:var(--c-warn-tx);">unprecedented</span>
+            <span class="chip" style="background:#f9f3e4;border:1px solid var(--c-warn-border);color:var(--c-warn-tx);">groundbreaking</span>
+            <span class="chip" style="background:#f9f3e4;border:1px solid var(--c-warn-border);color:var(--c-warn-tx);">game-changing</span>
+          </div>
+          <p style="margin-top:12px;font-size:13px;color:var(--c-warn-tx);line-height:1.8;">顶刊表达不是堆砌形容词，而是让机制、证据、功能和意义之间的逻辑更紧密。Confident but defensible.</p>
         </div>
-
-        <h3>推荐高阶表达</h3>
-        <div class="chip-row">
-          <span class="chip">This platform enables…</span>
-          <span class="chip">The field topology gives rise to…</span>
-          <span class="chip">The force landscape reveals…</span>
-          <span class="chip">The symmetry-controlled response provides…</span>
-          <span class="chip">The mechanism offers a general strategy for…</span>
-          <span class="chip">These findings extend optical manipulation from… to…</span>
-        </div>
-
-        <h3 style="margin-top:24px;">谨慎使用的过度营销词汇</h3>
-        <div class="chip-row">
-          <span class="chip" style="background:#fffbeb;border:1px solid #fde68a;color:#92400e;">revolutionary</span>
-          <span class="chip" style="background:#fffbeb;border:1px solid #fde68a;color:#92400e;">unprecedented</span>
-          <span class="chip" style="background:#fffbeb;border:1px solid #fde68a;color:#92400e;">groundbreaking</span>
-          <span class="chip" style="background:#fffbeb;border:1px solid #fde68a;color:#92400e;">paradigm-shifting</span>
-          <span class="chip" style="background:#fffbeb;border:1px solid #fde68a;color:#92400e;">game-changing</span>
-        </div>
-        <p style="margin-top:12px;font-size:14px;color:#92400e;line-height:1.8;">顶刊表达不是堆砌形容词，而是让机制、证据、功能和意义之间的逻辑更紧密。Confident but defensible.</p>
       </section>
 
     </div>
+    <div class="hint">提示：点击卡片标题展开/收起 · 搜索框实时过滤 · <span class="kbd">⌘K</span> 聚焦搜索</div>
   </div>
 </div>
 
 <!-- ═══════════════ CATEGORY: REVIEW ═══════════════ -->
 <div class="category" id="cat-review">
   <div class="wrap">
-    <div class="sub-nav">
-      <a class="sub-link" href="#rev-full">完整审稿提示词</a>
-      <a class="sub-link" href="#rev-structure">输出结构总览</a>
+    <div class="toolbar">
+      <div class="search-wrap"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input placeholder="搜索审稿相关…" oninput="filterReview(this.value)"></div>
+      <div class="toolbar-actions">
+        <a class="sub-link" href="#rev-full">完整提示词</a>
+        <a class="sub-link" href="#rev-structure">输出结构</a>
+      </div>
+      <button class="btn-all" onclick="copyOne(this,'prompt-review')">复制审稿提示词</button>
     </div>
+    <div class="sections-col" id="review-sections">
 
-    <div class="sections-col">
-
-      <!-- Main reviewer prompt -->
-      <section class="card scroll-mt-24" id="rev-full">
-        <div class="card-header">
-          <div><div class="card-label">Reviewer Prompt</div><h2>微纳光场调控与光学操控审稿提示词</h2></div>
-          <button class="copy-btn" onclick="copyText(this,'prompt-review')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>复制</span></button>
-        </div>
-        <pre class="prompt-cb" id="prompt-review">请你扮演一位在微纳光场调控与光学操控领域具有国际影响力的资深审稿人，审稿标准对标 Physical Review Letters、Light: Science &amp; Applications、Nature Photonics 等高水平期刊。
+      <section class="card scroll-mt" id="rev-full" data-keywords="审稿 提示词 reviewer prompt 完整">
+        <div class="card-hd"><div><div class="lbl">Reviewer Prompt</div><h2>微纳光场调控与光学操控审稿提示词</h2></div><button class="card-copy" onclick="copyOne(this,'prompt-review')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>复制</button></div>
+        <div class="card-body open"><pre class="pb" id="prompt-review">请你扮演一位在微纳光场调控与光学操控领域具有国际影响力的资深审稿人，审稿标准对标 Physical Review Letters、Light: Science &amp; Applications、Nature Photonics 等高水平期刊。
 
 我将提供一篇稿件的全文、摘要或部分内容。请你从以下角度进行严格、专业、批判性审稿：
 
@@ -398,89 +398,111 @@ D. 创新性不足，建议转投专业领域期刊
 - 对创新性判断要严格
 - 对物理机制、实验可靠性和文献对比要尤其敏感
 - 语言风格应接近真实高水平期刊审稿意见
-- 请以高水平期刊审稿人的标准判断，不要过于宽松</pre>
+- 请以高水平期刊审稿人的标准判断，不要过于宽松</pre></div>
+        <div class="card-toggle open" onclick="toggleCard(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>收起</div>
       </section>
 
-      <!-- Merged review structure outline -->
-      <section class="card scroll-mt-24" id="rev-structure">
-        <div class="card-label" style="margin-bottom:6px;">Output Structure</div>
-        <h2 style="margin-bottom:20px;">输出结构总览</h2>
-
-        <div class="rv-block">
-          <h4>一、总体评价</h4>
-          <p>从科学意义、创新程度、完成度三个维度给出整体判断，判断该工作是否达到 PRL / Light 级别期刊要求。</p>
+      <section class="card scroll-mt" id="rev-structure" data-keywords="结构 输出 总览 审稿 流程">
+        <div class="card-hd"><div><div class="lbl">Output Structure</div><h2>输出结构总览</h2></div></div>
+        <div style="padding:0 24px 24px;">
+          <div class="rv-block"><h4>一、总体评价</h4><p>从科学意义、创新程度、完成度三个维度给出整体判断。</p></div>
+          <div class="rv-block"><h4>二、主要问题 Major Concerns（≥ 6 条）</h4><p>每条包含问题描述、严重性原因、修改建议。重点关注：<span class="hl">创新性</span> <span class="hl">物理机制</span> <span class="hl">证据链</span> <span class="hl">对照实验</span> <span class="hl">文献区分</span></p></div>
+          <div class="rv-block"><h4>三、次要问题 Minor Concerns（≥ 6 条）</h4><p>文字表述、图表标注、单位符号、实验细节、术语准确性等。</p></div>
+          <div class="rv-block"><h4>四、建议补充的关键实验/仿真</h4><p>参数扫描 · 对照实验 · 光热效应排除 · 稳定性分析 · 力场定量计算 · 定量比较</p></div>
+          <div class="rv-block"><h4>五、可直接询问作者的问题（≥ 10 个）</h4><p>语气专业、尖锐但公正。</p></div>
+          <div class="rv-block"><h4>六、创新性判断</h4><p><strong>A.</strong> 概念性突破 &nbsp; <strong>B.</strong> 有新意但需强化 &nbsp; <strong>C.</strong> 工程优化 &nbsp; <strong>D.</strong> 创新不足</p></div>
+          <div class="rv-block"><h4>七、推荐审稿结论</h4><p><strong>Accept</strong> / <strong>Minor Revision</strong> / <strong>Major Revision</strong> / <strong>Reject and Resubmit</strong> / <strong>Reject</strong></p></div>
+          <div class="chip-row" style="margin-top:16px;">
+            <span class="chip">对标：PRL</span><span class="chip">Light: Science &amp; Applications</span><span class="chip">Nature Photonics</span>
+          </div>
         </div>
-        <hr class="rv-divider">
-
-        <div class="rv-block">
-          <h4>二、主要问题 Major Concerns（≥ 6 条）</h4>
-          <p>每条包括：问题描述、为什么严重、修改建议、是否影响核心结论。重点关注：</p>
-          <ul>
-            <li><span class="highlight">创新性</span> — 是否仅是已有方法的组合或工程优化</li>
-            <li><span class="highlight">物理机制</span> — 光-物质相互作用、力场逻辑是否自洽</li>
-            <li><span class="highlight">证据链</span> — 关键结论是否被数据充分支撑</li>
-            <li><span class="highlight">对照实验</span> — 是否缺少与已有方法的定量比较</li>
-            <li><span class="highlight">文献区分</span> — 与已有工作是否充分区分</li>
-          </ul>
-        </div>
-        <hr class="rv-divider">
-
-        <div class="rv-block">
-          <h4>三、次要问题 Minor Concerns（≥ 6 条）</h4>
-          <p>文字表述、图表标注、单位符号、实验细节、参考文献、术语准确性等。</p>
-        </div>
-        <hr class="rv-divider">
-
-        <div class="rv-block">
-          <h4>四、建议补充的关键实验/仿真</h4>
-          <ul>
-            <li>参数扫描（粒径、折射率、波长）</li>
-            <li>对照结构 / 对照实验</li>
-            <li>光功率依赖 / 光热效应排除</li>
-            <li>布朗运动与稳定性分析</li>
-            <li>力场势阱深度、捕获刚度或力矩的定量计算</li>
-            <li>与已有方法的定量比较</li>
-          </ul>
-        </div>
-        <hr class="rv-divider">
-
-        <div class="rv-block">
-          <h4>五、可直接询问作者的问题（≥ 10 个）</h4>
-          <p>语气专业、尖锐但公正。示例："作者如何排除光热效应对粒子运动的贡献？""光场分布与实际粒子受力之间是否存在直接对应关系？""与传统光镊、等离激元光镊相比，优势在哪里？"</p>
-        </div>
-        <hr class="rv-divider">
-
-        <div class="rv-block">
-          <h4>六、创新性判断</h4>
-          <ul>
-            <li><strong>A.</strong> 概念性突破，适合 PRL / Light 级别</li>
-            <li><strong>B.</strong> 有一定新意，但需大幅强化物理机制和证据链</li>
-            <li><strong>C.</strong> 主要是工程优化或已有方法组合</li>
-            <li><strong>D.</strong> 创新性不足，建议转投专业领域期刊</li>
-          </ul>
-        </div>
-        <hr class="rv-divider">
-
-        <div class="rv-block">
-          <h4>七、推荐审稿结论</h4>
-          <p><strong>Accept</strong> / <strong>Minor Revision</strong> / <strong>Major Revision</strong> / <strong>Reject and Resubmit</strong> / <strong>Reject</strong> — 以高水平期刊标准判断，不过于宽松。</p>
-        </div>
-
-        <hr class="rv-divider">
-        <div class="chip-row">
-          <span class="chip">对标：PRL</span>
-          <span class="chip">Light: Science &amp; Applications</span>
-          <span class="chip">Nature Photonics</span>
-        </div>
+        <div class="card-toggle open" onclick="toggleCard(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>收起</div>
       </section>
 
     </div>
+    <div class="hint">提示：点击卡片标题展开/收起 · 将稿件全文粘贴到提示词后方使用</div>
   </div>
 </div>
 
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
 <script>
-function switchCat(c){document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.category').forEach(c=>c.classList.remove('active'));document.getElementById('cat-'+c).classList.add('active');document.querySelector('.cat-btn[onclick*="'+c+'"]').classList.add('active');}
-function copyText(b,i){var t=document.getElementById(i).textContent;navigator.clipboard.writeText(t).then(function(){b.classList.add('copied');b.querySelector('span').textContent='已复制';setTimeout(function(){b.classList.remove('copied');b.querySelector('span').textContent='复制';},1400);});}
+function switchCat(c){
+  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.toggle('active',b.textContent.trim().includes(c==='writing'?'写':'审')));
+  document.querySelectorAll('.category').forEach(el=>el.classList.toggle('active',el.id==='cat-'+c));
+}
+
+function toggleCard(el){
+  var body=el.parentElement.querySelector('.card-body');
+  if(!body) body=el.previousElementSibling;
+  var open=body.classList.contains('open');
+  body.classList.toggle('open');
+  el.classList.toggle('open');
+  el.innerHTML=open?'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>展开':body.querySelector('pre')?'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 15 12 9 18 15"/></svg>收起':'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 15 12 9 18 15"/></svg>收起';
+}
+
+function copyOne(btn,id){
+  var t=document.getElementById(id);
+  var text=t?t.textContent:'';
+  navigator.clipboard.writeText(text).then(function(){
+    btn.classList.add('copied');
+    var sp=btn.querySelector('span');
+    if(!sp&&btn.textContent.trim()==='复制审稿提示词') sp=btn;
+    var orig=sp?sp.textContent:'复制';
+    if(sp) sp.textContent='已复制';
+    else btn.textContent='已复制';
+    toast('已复制到剪贴板');
+    setTimeout(function(){
+      btn.classList.remove('copied');
+      if(sp) sp.textContent=orig;
+      else btn.textContent=orig;
+    },1500);
+  });
+}
+
+function copyAllWriting(){
+  var ids=['prompt-full','prompt-abstract','prompt-intro','prompt-results','prompt-conclusion','prompt-strong'];
+  var labels=['通用全文润色','摘要','引言','结果与讨论','结论','更强包装版本'];
+  var all=ids.map(function(id,i){return '# '+labels[i]+'\n\n'+document.getElementById(id).textContent;}).join('\n\n---\n\n');
+  navigator.clipboard.writeText(all).then(function(){
+    var btn=document.querySelector('#cat-writing .btn-all');
+    btn.classList.add('done');
+    btn.textContent='已复制全部 ✓';
+    toast('6 个提示词已全部复制');
+    setTimeout(function(){btn.classList.remove('done');btn.textContent='复制全部';},2000);
+  });
+}
+
+function toast(msg){
+  var t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show');},2000);
+}
+
+function filterWriting(q){
+  q=q.toLowerCase();
+  document.querySelectorAll('#writing-sections .card').forEach(function(c){
+    var kw=c.dataset.keywords||'';
+    var tx=c.textContent.toLowerCase();
+    c.classList.toggle('hidden',!!q&&!(kw+tx).includes(q));
+  });
+}
+
+function filterReview(q){
+  q=q.toLowerCase();
+  document.querySelectorAll('#review-sections .card').forEach(function(c){
+    var kw=c.dataset.keywords||'';
+    var tx=c.textContent.toLowerCase();
+    c.classList.toggle('hidden',!!q&&!(kw+tx).includes(q));
+  });
+}
+
+document.addEventListener('keydown',function(e){
+  if((e.metaKey||e.ctrlKey)&&e.key==='k'){e.preventDefault();
+    var inp=document.querySelector('.category.active .search-wrap input');
+    if(inp) inp.focus();}
+});
 </script>
 </body>
 </html>
