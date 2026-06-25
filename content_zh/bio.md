@@ -4,4 +4,4 @@
 
 2026年6月至今，加入成都理工大学物理学院[叶芳伟教授](https://scholar.google.com.hk/citations?user=W6ZrnmIAAAAJ&hl=zh-CN&oi=ao)团队，任副研究员。
 
-主要研究方向为结构光场调控、拓扑结构光以及光镊技术。已在 *Nature Communications*、*Advanced Materials*、*Light: Science & Applications*、*Nano Letters*、*Photonics Research* 等期刊发表学术论文20余篇。
+主要研究方向为结构光场调控、拓扑结构光以及光镊技术。已在 *Nature Communications*、*Advanced Materials*、*elight*、*Light: Science & Applications*、*Nano Letters*、*Photonics Research* 等期刊发表学术论文20余篇。
