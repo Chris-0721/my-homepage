@@ -10,6 +10,17 @@ content = "一种基于全息倏逝波光镊的智能分析方法与装置。Inv
 
 [[items]]
 title = "Oral Presentation"
+subtitle = "China Optical Society Academic Annual Conference 2026"
+date = "2026"
+content = "Optical Skyrmions: Multi-Degree-of-Freedom Generation, Stabilization and Optical Tweezers Manipulation. Shenzhen, China."
+images = [
+  "/Conference/osac2026-1.jpg",
+  "/Conference/osac2026-2.jpg",
+  "/Conference/osac2026-3.jpg"
+]
+
+[[items]]
+title = "Oral Presentation"
 subtitle = "PIESR Chiba 2025"
 date = "2025"
 content = "Topological Magnetic Lattices for On-Chip Nanoparticle Trapping and Sorting. Chiba, Japan."

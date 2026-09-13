@@ -10,6 +10,17 @@ content = "一种基于全息倏逝波光镊的智能分析方法与装置。发
 
 [[items]]
 title = "口头报告"
+subtitle = "中国光学学会学术大会 2026"
+date = "2026"
+content = "光学斯格明子：多自由度产生、稳定及光摄操控。中国·深圳。"
+images = [
+  "/Conference/osac2026-1.jpg",
+  "/Conference/osac2026-2.jpg",
+  "/Conference/osac2026-3.jpg"
+]
+
+[[items]]
+title = "口头报告"
 subtitle = "PIESR Chiba 2025"
 date = "2025"
 content = "Topological Magnetic Lattices for On-Chip Nanoparticle Trapping and Sorting。日本·千叶。"

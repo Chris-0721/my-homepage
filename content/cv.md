@@ -54,6 +54,7 @@ Chinese Patent: Intelligent Analysis Method and Device Based on Holographic Evan
 (Inventors: Yuquan Zhang; Xi Xie; Xianyou Wang; Changjun Min; Xiaocong Yuan)
 
 International conference presentations:
+- China Optical Society Academic Annual Conference 2026 (Shenzhen, China)
 - PIESR Chiba 2025
 - Photonics M³ Conference 2025
 - The 4th China Metamaterials Congress 2025

@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import ReactMarkdown from 'react-markdown';
 import { CardPageConfig } from '@/types/page';
 
@@ -48,7 +49,14 @@ export default function CardPage({ config, embedded = false }: { config: CardPag
             </div>
 
             <div className={`grid ${embedded ? "gap-4" : "gap-6"}`}>
-                {config.items.map((item, index) => (
+                {config.items.map((item, index) => {
+                    const images = item.images && item.images.length > 0
+                        ? item.images
+                        : item.image
+                            ? [item.image]
+                            : [];
+
+                    return (
                     <motion.div
                         key={index}
                         initial={{ opacity: 0, y: 20 }}
@@ -74,6 +82,30 @@ export default function CardPage({ config, embedded = false }: { config: CardPag
                                 </ReactMarkdown>
                             </div>
                         )}
+                        {images.length > 0 && (
+                            <div className={`grid gap-3 mt-4 ${
+                                images.length === 1
+                                    ? 'grid-cols-1'
+                                    : images.length === 2
+                                        ? 'grid-cols-2'
+                                        : 'grid-cols-2 sm:grid-cols-3'
+                            }`}>
+                                {images.map((src, i) => (
+                                    <div
+                                        key={i}
+                                        className="relative w-full aspect-[4/3] overflow-hidden rounded-lg bg-neutral-100 dark:bg-neutral-800"
+                                    >
+                                        <Image
+                                            src={src}
+                                            alt={`${item.title}${item.subtitle ? ' - ' + item.subtitle : ''} (${i + 1})`}
+                                            fill
+                                            className="object-cover hover:scale-105 transition-transform duration-500"
+                                            sizes="(max-width: 640px) 50vw, 33vw"
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                         {item.tags && (
                             <div className="flex flex-wrap gap-2 mt-4">
                                 {item.tags.map(tag => (
@@ -84,7 +116,8 @@ export default function CardPage({ config, embedded = false }: { config: CardPag
                             </div>
                         )}
                     </motion.div>
-                ))}
+                    );
+                })}
             </div>
         </motion.div>
     );
