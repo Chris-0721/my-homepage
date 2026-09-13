@@ -34,3 +34,9 @@ id = "research_news"
 type = "gallery"
 source = "research_news.toml"
 title = "Research Highlights"
+
+[[sections]]
+id = "conference_gallery"
+type = "gallery"
+source = "conference_photos.toml"
+title = "Conference Gallery"

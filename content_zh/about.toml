@@ -34,3 +34,9 @@ id = "research_news"
 type = "gallery"
 source = "research_news.toml"
 title = "科研动态"
+
+[[sections]]
+id = "conference_gallery"
+type = "gallery"
+source = "conference_photos.toml"
+title = "会议相册"
