@@ -1,1 +1,13 @@
-/* /index.html 200
+# Cloudflare Pages redirects.
+#
+# NOTE: the previous `/* /index.html 200` rule made every unknown URL return the
+# homepage with HTTP 200 (a "soft 404"), which wastes crawl budget and can cause
+# duplicate-content dilution. Next.js `output: 'export'` already emits a real
+# HTML file per route and Cloudflare Pages serves the generated 404.html for
+# unknown paths, so no SPA fallback is required.
+#
+# Trailing-slash normalisation: redirect explicit index.html requests to the
+# canonical directory URL so only one URL form is indexed.
+/publications/index.html /publications/ 301
+/awards/index.html /awards/ 301
+/cv/index.html /cv/ 301

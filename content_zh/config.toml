@@ -18,6 +18,14 @@ location_details = [
 google_scholar = "https://scholar.google.com.hk/citations?user=61xHj8MAAAAJ"
 orcid = "https://orcid.org/0000-0003-2748-7974"
 
+[seo]
+# 中文搜索元数据（百度/必应中国）。
+site_url = "https://xxlab.org"
+title = "谢希 (Xi Xie) — 光学斯格明子与结构光场 | 成都理工大学物理学院"
+description = "谢希，成都理工大学物理学院副研究员，个人学术主页。研究方向：光学斯格明子、结构光场调控、拓扑光子学、光镊技术与纳米光子学。"
+keywords = "谢希, Xi Xie, 光学斯格明子, 结构光场, 结构光场调控, 拓扑光子学, 拓扑结构光, 光镊, 纳米光子学, 成都理工大学, 物理学院, 叶芳伟, 闵长俊, X² 实验室, xxlab"
+og_image = "/og-cover.png"
+
 [[navigation]]
 title = "关于我"
 type = "page"

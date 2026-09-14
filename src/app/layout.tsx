@@ -7,31 +7,94 @@ import { LocaleProvider } from '@/components/ui/LocaleProvider';
 import { getConfig } from '@/lib/config';
 import { getRuntimeI18nConfig } from '@/lib/i18n/config';
 import type { SiteConfig } from '@/lib/config';
+import {
+  getSeoConfig,
+  getVerification,
+  buildJsonLdGraph,
+  buildPersonJsonLd,
+  buildWebSiteJsonLd,
+  buildPersonProfilePageJsonLd,
+} from '@/lib/seo';
 
 export async function generateMetadata(): Promise<Metadata> {
   const config = getConfig();
   const runtimeI18n = getRuntimeI18nConfig(config.i18n);
   const openGraphLocale = runtimeI18n.defaultLocale === 'zh' ? 'zh_CN' : 'en_US';
 
+  const seo = getSeoConfig(config);
+  const verification = getVerification(config);
+
+  // Merge keyword sets from every locale so Chinese terms reach Baidu / Bing CN
+  // even though the static HTML is shipped in the default locale.
+  const localizedKeywords = (runtimeI18n.enabled ? runtimeI18n.locales : [])
+    .filter((locale) => locale !== runtimeI18n.defaultLocale)
+    .flatMap((locale) => getSeoConfig(getConfig(locale)).keywords);
+  const keywords = Array.from(new Set([...seo.keywords, ...localizedKeywords]));
+
   return {
+    metadataBase: new URL(seo.siteUrl),
     title: {
-      default: config.site.title,
-      template: `%s | ${config.site.title}`,
+      default: seo.title,
+      template: `%s | ${config.author.name} (谢希) · X² Lab`,
     },
-    description: config.site.description,
-    keywords: [config.author.name, 'PhD', 'Research', config.author.institution],
-    authors: [{ name: config.author.name }],
+    description: seo.description,
+    keywords,
+    authors: [{ name: config.author.name, url: seo.siteUrl }],
     creator: config.author.name,
     publisher: config.author.name,
+    category: 'Science',
+    applicationName: `${config.site.title} — ${config.author.name}`,
+    alternates: {
+      canonical: '/',
+      languages: {
+        en: seo.siteUrl,
+        'zh-CN': seo.siteUrl,
+        'x-default': seo.siteUrl,
+      },
+    },
     icons: {
       icon: config.site.favicon,
+      apple: config.author.avatar,
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+        'max-video-preview': -1,
+      },
+    },
+    verification: {
+      google: verification.google,
+      other: verification.other,
     },
     openGraph: {
       type: 'website',
       locale: openGraphLocale,
-      title: config.site.title,
-      description: config.site.description,
-      siteName: `${config.author.name}'s Academic Website`,
+      alternateLocale: ['zh_CN', 'en_US'].filter(
+        (locale) => locale !== openGraphLocale
+      ),
+      url: seo.siteUrl,
+      title: seo.title,
+      description: seo.description,
+      siteName: `${config.author.name} (谢希) — ${config.site.title}`,
+      images: [
+        {
+          url: seo.ogImage,
+          width: 1200,
+          height: 630,
+          alt: `${config.author.name} (谢希) — ${config.author.institution}`,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: seo.title,
+      description: seo.description,
+      images: [seo.ogImage],
     },
   };
 }
@@ -126,10 +189,21 @@ export default function RootLayout({
     lastUpdatedByLocale,
   } = buildLocalizedConfigMaps(targetLocales);
 
+  const seo = getSeoConfig(config);
+  const structuredData = buildJsonLdGraph([
+    buildPersonJsonLd(config, seo.siteUrl),
+    buildWebSiteJsonLd(config, seo.siteUrl),
+    buildPersonProfilePageJsonLd(seo.siteUrl),
+  ]);
+
   return (
     <html lang={runtimeI18n.defaultLocale} className="scroll-smooth" suppressHydrationWarning>
       <head>
         <link rel="icon" href={config.site.favicon} type="image/svg+xml" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: structuredData }}
+        />
         <link rel="dns-prefetch" href="https://jialeliu.com" />
         <link rel="preconnect" href="https://jialeliu.com" crossOrigin="" />
         <link

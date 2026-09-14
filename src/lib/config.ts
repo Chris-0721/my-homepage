@@ -46,6 +46,17 @@ export interface SiteConfig {
     limit?: number;
   }>;
   i18n?: I18nConfig;
+  /** Optional search-engine metadata overrides. See src/lib/seo.ts. */
+  seo?: {
+    site_url?: string;
+    title?: string;
+    description?: string;
+    keywords?: string;
+    og_image?: string;
+    verification_google?: string;
+    verification_bing?: string;
+    verification_baidu?: string;
+  };
 }
 
 const DEFAULT_CONTENT_DIR = 'content';
@@ -86,6 +97,7 @@ function mergeConfig(base: SiteConfig, localized?: Partial<SiteConfig> | null): 
     features: base.features,
     navigation: localized.navigation || base.navigation,
     sections: localized.sections || base.sections,
+    seo: { ...(base.seo || {}), ...(localized.seo || {}) },
     // i18n is always sourced from default content/config.toml
     i18n: base.i18n,
   };

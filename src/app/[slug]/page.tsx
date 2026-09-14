@@ -12,6 +12,11 @@ import {
 
 import { Metadata } from 'next';
 import { getRuntimeI18nConfig } from '@/lib/i18n/config';
+import {
+  getSeoConfig,
+  buildJsonLdGraph,
+  buildPublicationsJsonLd,
+} from '@/lib/seo';
 
 function loadDynamicPageData(slug: string, locale?: string): DynamicPageLocaleData | null {
   const pageConfig = getPageConfig(slug, locale) as BasePageConfig | null;
@@ -67,9 +72,39 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     return {};
   }
 
+  const config = getConfig();
+  const seo = getSeoConfig(config);
+
+  const description =
+    pageConfig.description ||
+    `${pageConfig.title} — ${config.author.name} (谢希), ${config.author.institution}`;
+  const url = `${seo.siteUrl}/${slug}/`;
+
   return {
     title: pageConfig.title,
-    description: pageConfig.description,
+    description,
+    alternates: {
+      canonical: `/${slug}/`,
+    },
+    openGraph: {
+      type: 'website',
+      url,
+      title: `${pageConfig.title} | ${config.author.name} (谢希)`,
+      description,
+      siteName: `${config.author.name} (谢希) — ${config.site.title}`,
+      images: [
+        {
+          url: seo.ogImage,
+          alt: `${config.author.name} (谢希) — ${pageConfig.title}`,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${pageConfig.title} | ${config.author.name} (谢希)`,
+      description,
+      images: [seo.ogImage],
+    },
   };
 }
 
@@ -98,5 +133,30 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug: 
     notFound();
   }
 
-  return <DynamicPageClient dataByLocale={dataByLocale} defaultLocale={runtimeI18n.defaultLocale} />;
+  // Emit ScholarlyArticle structured data so each paper becomes an indexable,
+  // entity-resolvable node instead of plain page text.
+  const seo = getSeoConfig(baseConfig);
+  const publicationData = dataByLocale[runtimeI18n.defaultLocale];
+  const publicationsJsonLd =
+    publicationData && publicationData.type === 'publication'
+      ? buildPublicationsJsonLd(
+          publicationData.publications,
+          seo.siteUrl,
+          `${seo.siteUrl}/${slug}/`
+        )
+      : null;
+
+  return (
+    <>
+      {publicationsJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: buildJsonLdGraph([publicationsJsonLd]),
+          }}
+        />
+      )}
+      <DynamicPageClient dataByLocale={dataByLocale} defaultLocale={runtimeI18n.defaultLocale} />
+    </>
+  );
 }

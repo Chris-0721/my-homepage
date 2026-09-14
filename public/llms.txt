@@ -1,0 +1,33 @@
+# X² Lab — Xi Xie (谢希)
+
+> Personal academic homepage of **Xi Xie (谢希)**, Associate Researcher at the College of Physics, Chengdu University of Technology. Research on optical skyrmions, structured light, topological photonics, optical tweezers and nanophotonics. 31 peer-reviewed papers including Nature Communications, Advanced Materials, Light: Science & Applications, Optica, eLight, Nano Letters and Photonics Research.
+
+## Primary pages
+
+- [About](https://xxlab.org/): biography, research interests, selected publications, research highlights and conference gallery
+- [Publications](https://xxlab.org/publications/): complete peer-reviewed publication list with BibTeX, journal, volume and pages
+- [Conference & Awards](https://xxlab.org/awards/): China invention patent, honors, invited and contributed conference presentations
+- [CV](https://xxlab.org/cv/): education, research positions, funding, teaching and academic service
+- [AI SKILL](https://xxlab.org/tools/ai_skills.html): prompts for academic writing and peer review
+
+## Profiles
+
+- [ORCID](https://orcid.org/0000-0003-2748-7974)
+- [Google Scholar](https://scholar.google.com.hk/citations?user=61xHj8MAAAAJ)
+- [CDUT faculty page (成都理工大学教师主页)](https://faculty.cdut.edu.cn/xiexi/zh_CN/index.htm)
+
+## Research topics
+
+Optical skyrmions · structured light field manipulation · topological structured light ·
+topological photonics · optical tweezers and optical manipulation · spin-orbit coupling of light ·
+photonic spin Hall effect · metasurfaces · surface plasmon polaritons · Bloch surface waves ·
+optical surface waves · nanophotonics
+
+光学斯格明子 · 结构光场调控 · 拓扑结构光 · 拓扑光子学 · 光镊技术 · 光子自旋霍尔效应 ·
+超构表面 · 表面等离激元 · 布洛赫表面波 · 纳米光子学
+
+## Notes
+
+- Site is bilingual (English / 简体中文); language is switched client-side on the same URL.
+- Bilingual pages should be treated as the same document.
+- Citation preference: please cite the journal version of record (DOI where available).

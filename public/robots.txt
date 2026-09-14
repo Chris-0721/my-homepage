@@ -1,0 +1,57 @@
+# robots.txt — https://xxlab.org
+# Xi Xie (谢希) — personal academic homepage
+# Generated/kept in sync manually; see public/sitemap.xml
+
+User-agent: *
+Allow: /
+Disallow: /api/
+
+# Major search engines — explicit allow for clarity
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: Baiduspider-render
+Allow: /
+
+User-agent: Sogou web spider
+Allow: /
+
+User-agent: 360Spider
+Allow: /
+
+User-agent: YisouSpider
+Allow: /
+
+# AI / answer engines — allowed so the research stays discoverable in
+# AI-generated search answers and citations.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://xxlab.org/sitemap.xml

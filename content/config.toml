@@ -47,6 +47,18 @@ switcher = true
 zh = "中文"
 en = "English"
 
+[seo]
+# Search-engine metadata. Consumed by src/lib/seo.ts -> layout.tsx generateMetadata.
+site_url = "https://xxlab.org"
+title = "Xi Xie (谢希) | Optical Skyrmions & Structured Light — CDUT"
+description = "Xi Xie (谢希), Associate Researcher at Chengdu University of Technology. Optical skyrmions, structured light, topological photonics & optical tweezers."
+keywords = "Xi Xie, 谢希, Xie Xi, optical skyrmions, 光学斯格明子, structured light, 结构光场, topological photonics, 拓扑光子学, optical tweezers, 光镊, nanophotonics, 纳米光子学, metasurfaces, spin-orbit coupling, Chengdu University of Technology, 成都理工大学, College of Physics, 物理学院, X² Lab, xxlab"
+og_image = "/og-cover.png"
+# Fill these in after registering the site with each webmaster console.
+verification_google = ""
+verification_bing = ""
+verification_baidu = ""
+
 [[navigation]]
 title = "About"
 type = "page"

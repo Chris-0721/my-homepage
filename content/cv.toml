@@ -1,3 +1,4 @@
 type = "text"
 title = "CV"
+description = "Academic CV of Xi Xie (谢希): PhD from Shenzhen University, postdoctoral fellow at Nanyang Technological University, now Associate Researcher at Chengdu University of Technology."
 source = "cv.md"
