@@ -66,18 +66,25 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const pageConfig = getPageConfig(slug) as BasePageConfig | null;
+
+  const config = getConfig();
+  const runtimeI18n = getRuntimeI18nConfig(config.i18n);
+  // 站点只有单一 URL（/），页面元数据一律按 default_locale 输出。
+  // 若这里不传 locale，取到的是英文页面配置（"Publications"/"Awards…"），
+  // 中文查询词就匹配不到子页面标题。
+  const locale = runtimeI18n.defaultLocale;
+  const localeConfig = getConfig(locale);
+  const pageConfig = getPageConfig(slug, locale) as BasePageConfig | null;
 
   if (!pageConfig) {
     return {};
   }
 
-  const config = getConfig();
   const seo = getSeoConfig(config);
 
   const description =
     pageConfig.description ||
-    `${pageConfig.title} — ${config.author.name} (谢希), ${config.author.institution}`;
+    `${pageConfig.title} — 谢希 (Xi Xie)，${localeConfig.author.institution}`;
   const url = `${seo.siteUrl}/${slug}/`;
 
   return {
@@ -89,19 +96,19 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     openGraph: {
       type: 'website',
       url,
-      title: `${pageConfig.title} | ${config.author.name} (谢希)`,
+      title: `${pageConfig.title} | 谢希 (Xi Xie)`,
       description,
-      siteName: `${config.author.name} (谢希) — ${config.site.title}`,
+      siteName: `谢希 (Xi Xie) — ${localeConfig.site.title}`,
       images: [
         {
           url: seo.ogImage,
-          alt: `${config.author.name} (谢希) — ${pageConfig.title}`,
+          alt: `${pageConfig.title} — 谢希 (Xi Xie)`,
         },
       ],
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${pageConfig.title} | ${config.author.name} (谢希)`,
+      title: `${pageConfig.title} | 谢希 (Xi Xie)`,
       description,
       images: [seo.ogImage],
     },

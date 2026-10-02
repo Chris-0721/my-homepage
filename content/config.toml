@@ -13,7 +13,7 @@ avatar = "/bio.jpg"
 [social]
 # Contact information (leave blank or delete to hide)
 
-email = "xixie0721@163.com"
+email = "xiexi@cdut.edu.cn"
 location = "Nanchong, Sichuan, China"
 location_url = "https://maps.google.com"
 location_details = [
@@ -31,13 +31,18 @@ enable_likes = true
 # Display all subpages on a single page
 enable_one_page_mode = false
 
+# default_locale 是「静态 HTML 用哪种语言预渲染」的唯一事实来源。
+# 站点只有单一 URL（/），爬虫拿到的就是 default_locale 这一版；设成 "zh" 才能让
+# 「谢希 成都理工大学」这类中文查询命中。用户在浏览器里仍可自由切换（mode = "auto"）。
+# 注意：改这里之后，next.config.ts 会在构建期把它注入 NEXT_PUBLIC_DEFAULT_LOCALE，
+# 供 src/lib/stores/localeStore.ts 作为首屏语言初值，二者不得漂移。
 [i18n]
 enabled = true
 locales = ["zh", "en"]
-default_locale = "en"
+default_locale = "zh"
 # "auto" means the locale will be determined by the browser's language setting, "fixed" means the locale will be fixed to the default locale (but can be switched still, if you want to disable, set "enable=false")
 mode = "auto"
-fixed_locale = "en"
+fixed_locale = "zh"
 # If true, PRISM will remember user's language preference in browser's localStorage
 persist = true
 # Show a language switcher on the top right corner
@@ -49,10 +54,12 @@ en = "English"
 
 [seo]
 # Search-engine metadata. Consumed by src/lib/seo.ts -> layout.tsx generateMetadata.
+# 站点只有单一 URL，generateMetadata 恒读本段（locale 参数不参与），所以这里是
+# **全局** SEO 文案：中文在前以适配百度/必应中国，英文关键词留在 keywords 里兜国际检索。
 site_url = "https://xxlab.org"
-title = "Xi Xie (谢希) | Optical Skyrmions & Structured Light — CDUT"
-description = "Xi Xie (谢希), Associate Researcher at Chengdu University of Technology. Optical skyrmions, structured light, topological photonics & optical tweezers."
-keywords = "Xi Xie, 谢希, Xie Xi, optical skyrmions, 光学斯格明子, structured light, 结构光场, topological photonics, 拓扑光子学, optical tweezers, 光镊, nanophotonics, 纳米光子学, metasurfaces, spin-orbit coupling, Chengdu University of Technology, 成都理工大学, College of Physics, 物理学院, X² Lab, xxlab"
+title = "谢希 (Xi Xie) · 成都理工大学物理学院 | 光学斯格明子与结构光场"
+description = "谢希，成都理工大学物理学院副研究员，X² 实验室。研究方向：光学斯格明子、结构光场调控、拓扑光子学、光镊技术与纳米光子学。"
+keywords = "谢希, Xie Xi, Xi Xie, 成都理工大学, 成都理工大学物理学院, 物理学院, 副研究员, 光学斯格明子, 光学skyrmion, 结构光场, 结构光场调控, 拓扑光子学, 拓扑结构光, 光镊, 光镊技术, 纳米光子学, 超构透镜, 光子自旋霍尔效应, X² 实验室, xxlab, optical skyrmions, structured light, topological photonics, optical tweezers, nanophotonics, metasurfaces, spin-orbit coupling, Chengdu University of Technology"
 og_image = "/og-cover.png"
 # Fill these in after registering the site with each webmaster console.
 verification_google = ""

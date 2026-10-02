@@ -6,6 +6,16 @@ import type { I18nRuntimeConfig } from '@/types/i18n';
 
 const LOCALE_STORAGE_KEY = 'locale-storage';
 
+/**
+ * 首屏（SSR + hydration 第一次渲染）使用的语言。
+ *
+ * 构建期由 next.config.ts 从 content/config.toml 的 [i18n] default_locale 注入。
+ * 必须是构建期常量而非运行时探测：静态导出时没有 navigator，SSR 只能按此值渲染，
+ * 若与站点默认语言不一致，预渲染出来的 DOM 就是错误的语言（爬虫读不到中文）。
+ * 首屏之后仍由 initialize() 按 localStorage / navigator.language 接管。
+ */
+const INITIAL_LOCALE = process.env.NEXT_PUBLIC_DEFAULT_LOCALE || 'en';
+
 interface LocaleStore {
   locale: string;
   isReady: boolean;
@@ -69,10 +79,10 @@ function resolveInitialLocale(config: I18nRuntimeConfig): string {
 }
 
 export const useLocaleStore = create<LocaleStore>()((set, get) => ({
-  locale: 'en',
+  locale: INITIAL_LOCALE,
   isReady: false,
   locales: ['en'],
-  defaultLocale: 'en',
+  defaultLocale: INITIAL_LOCALE,
   persistSelection: true,
 
   initialize: (config: I18nRuntimeConfig) => {

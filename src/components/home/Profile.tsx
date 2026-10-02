@@ -156,6 +156,19 @@ export default function Profile({ author, social, features, researchInterests }:
                 <p className="text-lg text-accent font-medium mb-1">
                     {author.title}
                 </p>
+                {/* 邮箱直接展示在职称下方，便于访客一眼看到、点击即发信 */}
+                {social.email && (
+                    <div className="mb-2">
+                        <a
+                            href={`mailto:${social.email}`}
+                            aria-label={messages.profile.email}
+                            className="inline-flex items-center justify-center gap-1.5 text-base font-mono text-neutral-700 dark:text-neutral-400 hover:text-accent hover:underline underline-offset-4 transition-colors duration-200"
+                        >
+                            <EnvelopeIcon className="h-4 w-4 shrink-0" />
+                            <span>{social.email}</span>
+                        </a>
+                    </div>
+                )}
                 <p className="text-neutral-600 mb-2">
                     {author.institution}
                 </p>

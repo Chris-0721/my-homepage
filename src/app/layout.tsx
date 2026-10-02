@@ -35,7 +35,7 @@ export async function generateMetadata(): Promise<Metadata> {
     metadataBase: new URL(seo.siteUrl),
     title: {
       default: seo.title,
-      template: `%s | ${config.author.name} (谢希) · X² Lab`,
+      template: `%s | 谢希 (Xi Xie) · X² Lab`,
     },
     description: seo.description,
     keywords,
@@ -45,12 +45,10 @@ export async function generateMetadata(): Promise<Metadata> {
     category: 'Science',
     applicationName: `${config.site.title} — ${config.author.name}`,
     alternates: {
+      // 站点只有单一 URL（中英共用 /，语言在客户端切换），因此**不能**声明 hreflang：
+      // 把 en / zh-CN / x-default 全指向同一个 URL 属于自相矛盾的 hreflang，
+      // 会被 Google 整组忽略，还会稀释信号。只在将来拆出 /en/ 独立路径时才恢复。
       canonical: '/',
-      languages: {
-        en: seo.siteUrl,
-        'zh-CN': seo.siteUrl,
-        'x-default': seo.siteUrl,
-      },
     },
     icons: {
       icon: config.site.favicon,
@@ -80,7 +78,7 @@ export async function generateMetadata(): Promise<Metadata> {
       url: seo.siteUrl,
       title: seo.title,
       description: seo.description,
-      siteName: `${config.author.name} (谢希) — ${config.site.title}`,
+      siteName: `谢希 (Xi Xie) — ${config.site.title}`,
       images: [
         {
           url: seo.ogImage,
@@ -182,6 +180,8 @@ export default function RootLayout({
   const config = getConfig();
   const runtimeI18n = getRuntimeI18nConfig(config.i18n);
   const targetLocales = runtimeI18n.enabled ? runtimeI18n.locales : [runtimeI18n.defaultLocale];
+  // BCP 47：'zh' 单独用不够精确，输出 'zh-CN' 帮助中文搜索引擎判定页面语言。
+  const htmlLang = runtimeI18n.defaultLocale === 'zh' ? 'zh-CN' : runtimeI18n.defaultLocale;
 
   const {
     navigationByLocale,
@@ -197,7 +197,7 @@ export default function RootLayout({
   ]);
 
   return (
-    <html lang={runtimeI18n.defaultLocale} className="scroll-smooth" suppressHydrationWarning>
+    <html lang={htmlLang} className="scroll-smooth" suppressHydrationWarning>
       <head>
         <link rel="icon" href={config.site.favicon} type="image/svg+xml" />
         <script

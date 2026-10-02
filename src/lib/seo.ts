@@ -15,7 +15,7 @@ export const IDENTITY = {
   orcid: 'https://orcid.org/0000-0003-2748-7974',
   scholar: 'https://scholar.google.com.hk/citations?user=61xHj8MAAAAJ',
   faculty: 'https://faculty.cdut.edu.cn/xiexi/zh_CN/index.htm',
-  email: 'xixie0721@163.com',
+  email: 'xiexi@cdut.edu.cn',
 };
 
 /**
