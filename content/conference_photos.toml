@@ -1,4 +1,10 @@
 [[news]]
+title = "Invited talk at CSMNT2026"
+journal = "Shaoxing · 16-18 Oct 2026"
+image = "/Conference/csmnt2026-1.jpg"
+description = "Invited talk certificate of CSMNT2026 — the 28th Annual Conference of the Chinese Society of Micro-Nano Technology & the 17th International Conference, held in Shaoxing on 16-18 October 2026."
+
+[[news]]
 title = "Chinese Optical Society Academic Annual Conference 2026"
 journal = "Shenzhen · Sep 2026"
 image = "/Conference/osac2026-1.jpg"
@@ -15,3 +21,9 @@ title = "Reunion with collaborators"
 journal = "Shenzhen University · Sep 2026"
 image = "/Conference/osac2026-3.jpg"
 description = "Group photo with colleagues and collaborators during the conference."
+
+[[news]]
+title = "Talk at Great Bay University"
+journal = "Presentation · 29 Dec 2025"
+image = "/Conference/gbu2025-1.jpg"
+description = "Delivered a talk on micro/nano manipulation with novel optical tweezers and topological light fields at Great Bay University."

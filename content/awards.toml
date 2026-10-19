@@ -1,12 +1,21 @@
 type = "card"
 title = "Awards & Conference Presentations"
-description = "Patents, honors and conference presentations of Xi Xie (谢希), including the China Optical Society Academic Annual Conference 2026 and PIESR Chiba 2025."
+description = "Patents, honors and conference presentations of Xi Xie (谢希), including CSMNT2026 in Shaoxing, the China Optical Society Academic Annual Conference 2026 and PIESR Chiba 2025."
 
 [[items]]
 title = "Patent (Inventor)"
 subtitle = "China Invention Patent"
 date = "2022"
 content = "一种基于全息倏逝波光镊的智能分析方法与装置。Inventors: Zhang, Yuquan; Xie, Xi; Wang, Xianyou; Min, Changjun; Yuan, Xiaocong. Patent No. 202111310256.9."
+
+[[items]]
+title = "Invited Talk"
+subtitle = "CSMNT 2026 — 28th Annual Conference of the Chinese Society of Micro-Nano Technology & 17th International Conference"
+date = "2026"
+content = "Invited talk at CSMNT2026, held on 16-18 October 2026. Shaoxing, China."
+images = [
+  "/Conference/csmnt2026-1.jpg"
+]
 
 [[items]]
 title = "Oral Presentation"
@@ -17,6 +26,15 @@ images = [
   "/Conference/osac2026-1.jpg",
   "/Conference/osac2026-2.jpg",
   "/Conference/osac2026-3.jpg"
+]
+
+[[items]]
+title = "Oral Presentation"
+subtitle = "Great Bay University"
+date = "2025"
+content = "Micro/Nano Manipulation with Novel Optical Tweezers and Topological Light Fields. 29 December 2025. Dongguan, China."
+images = [
+  "/Conference/gbu2025-1.jpg"
 ]
 
 [[items]]

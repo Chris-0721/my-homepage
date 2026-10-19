@@ -1,12 +1,21 @@
 type = "card"
 title = "奖项与会议报告"
-description = "谢希（Xi Xie）的发明专利、荣誉奖励与学术会议报告，含中国光学学会学术大会 2026、PIESR Chiba 2025 等。"
+description = "谢希（Xi Xie）的发明专利、荣誉奖励与学术会议报告，含中国微米纳米技术学会学术年会 CSMNT2026（绍兴）、中国光学学会学术大会 2026、PIESR Chiba 2025 等。"
 
 [[items]]
 title = "专利（发明人）"
 subtitle = "中国发明专利"
 date = "2022"
 content = "一种基于全息倏逝波光镊的智能分析方法与装置。发明人：张聿全; 谢希; 汪先友; 闵长俊; 袁小聪。专利号：202111310256.9。"
+
+[[items]]
+title = "邀请报告"
+subtitle = "中国微米纳米技术学会第二十八届学术年会暨第十七届国际会议（CSMNT2026）"
+date = "2026"
+content = "2026 年 10 月 16-18 日作邀请报告。中国·绍兴。"
+images = [
+  "/Conference/csmnt2026-1.jpg"
+]
 
 [[items]]
 title = "口头报告"
@@ -17,6 +26,15 @@ images = [
   "/Conference/osac2026-1.jpg",
   "/Conference/osac2026-2.jpg",
   "/Conference/osac2026-3.jpg"
+]
+
+[[items]]
+title = "口头报告"
+subtitle = "大湾区大学"
+date = "2025"
+content = "2025 年 12 月 29 日作学术报告，题目为「基于新型光镊技术与拓扑光场的微纳操控研究」。中国·东莞。"
+images = [
+  "/Conference/gbu2025-1.jpg"
 ]
 
 [[items]]

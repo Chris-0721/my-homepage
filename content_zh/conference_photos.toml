@@ -1,4 +1,10 @@
 [[news]]
+title = "CSMNT2026 邀请报告"
+journal = "绍兴 · 2026年10月16-18日"
+image = "/Conference/csmnt2026-1.jpg"
+description = "中国微米纳米技术学会第二十八届学术年会暨第十七届国际会议（CSMNT2026）邀请报告证书，2026 年 10 月 16-18 日于绍兴。"
+
+[[news]]
 title = "中国光学学会学术大会 2026"
 journal = "深圳 · 2026年9月"
 image = "/Conference/osac2026-1.jpg"
@@ -15,3 +21,9 @@ title = "与同仁合影"
 journal = "深圳大学 · 2026年9月"
 image = "/Conference/osac2026-3.jpg"
 description = "会议期间与课题组同仁及合作者合影。"
+
+[[news]]
+title = "大湾区大学学术报告"
+journal = "东莞 · 2025年12月29日"
+image = "/Conference/gbu2025-1.jpg"
+description = "作题为「基于新型光镊技术与拓扑光场的微纳操控研究」的学术报告。"
