@@ -59,7 +59,8 @@ export default function PublicationsList({ config, publications, embedded = fals
             const matchesAuthorRole =
                 selectedAuthorRole === 'all' ||
                 (selectedAuthorRole === 'firstAuthor' && pub.authors.some(a => a.isCoAuthor)) ||
-                (selectedAuthorRole === 'corresponding' && pub.authors.some(a => a.isCorresponding));
+                // 通讯：只认「本人」为通讯，否则任何合作者的 * 都会把该文带进来
+                (selectedAuthorRole === 'corresponding' && pub.authors.some(a => a.isCorresponding && a.isHighlighted));
 
             return matchesSearch && matchesYear && matchesType && matchesAuthorRole;
         });
