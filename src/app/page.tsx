@@ -18,6 +18,8 @@ interface SectionConfig {
   publications?: Publication[];
   items?: NewsItem[];
   galleryItems?: ResearchNewsItem[];
+  /** gallery 板块的图框版式，缺省 landscape（4:3） */
+  shape?: 'landscape' | 'portrait';
 }
 
 interface NewsItem {

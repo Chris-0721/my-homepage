@@ -42,6 +42,8 @@ export interface Publication {
   featured?: boolean;
   selected?: boolean;
   preview?: string;
+  /** 预览图版式：默认 landscape（4:3 横框）。期刊封面等竖版图用 'portrait' 走 3:4 竖框 */
+  previewShape?: 'landscape' | 'portrait';
   summary?: string;
   researchArea: ResearchArea;
   description?: string;

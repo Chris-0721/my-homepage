@@ -61,6 +61,12 @@ export function parseBibTeX(bibtexContent: string, locale?: string): Publication
 
     // Parse preview field (remove braces if present)
     const preview = tags.preview?.replace(/[{}]/g, '');
+    // 预览图版式：previewShape={portrait} → 3:4 竖框；缺省 landscape（4:3 横框）
+    const shapeRaw = tags.previewShape || tags.previewshape || '';
+    const previewShape =
+      shapeRaw.replace(/[{}]/g, '').toLowerCase() === 'portrait'
+        ? ('portrait' as const)
+        : undefined;
 
     // Create publication object
     const publication: Publication = {
@@ -88,9 +94,10 @@ export function parseBibTeX(bibtexContent: string, locale?: string): Publication
       description: cleanBibTeXString(tags.description || tags.note),
       selected,
       preview,
+      previewShape,
 
       // Store original BibTeX (excluding custom fields)
-      bibtex: reconstructBibTeX(entry, ['selected', 'preview', 'description', 'keywords', 'code']),
+      bibtex: reconstructBibTeX(entry, ['selected', 'preview', 'previewShape', 'previewshape', 'description', 'keywords', 'code']),
     };
 
     // Clean up undefined fields

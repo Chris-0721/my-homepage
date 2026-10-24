@@ -15,9 +15,12 @@ export interface ResearchNewsItem {
 interface ResearchNewsProps {
   items: ResearchNewsItem[];
   title?: string;
+  /** 图框版式：默认 landscape（4:3 裁切）；期刊封面等竖版图用 'portrait'（3:4 + 完整显示） */
+  shape?: 'landscape' | 'portrait';
 }
 
-export default function ResearchNews({ items, title }: ResearchNewsProps) {
+export default function ResearchNews({ items, title, shape = 'landscape' }: ResearchNewsProps) {
+  const isPortrait = shape === 'portrait';
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const close = useCallback(() => setActiveIndex(null), []);
@@ -81,13 +84,17 @@ export default function ResearchNews({ items, title }: ResearchNewsProps) {
               type="button"
               onClick={() => setActiveIndex(index)}
               aria-label={`放大查看：${item.title}`}
-              className="relative block w-full aspect-[4/3] overflow-hidden bg-neutral-200 dark:bg-neutral-700 cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              className={`relative block w-full overflow-hidden cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+                isPortrait
+                  ? 'aspect-[3/4] bg-white dark:bg-neutral-800'
+                  : 'aspect-[4/3] bg-neutral-200 dark:bg-neutral-700'
+              }`}
             >
               <Image
                 src={item.image}
                 alt={item.title}
                 fill
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
+                className={`${isPortrait ? 'object-contain' : 'object-cover'} group-hover:scale-105 transition-transform duration-500`}
                 sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
               />
             </button>

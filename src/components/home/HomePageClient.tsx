@@ -24,6 +24,7 @@ interface SectionConfig {
   publications?: Publication[];
   items?: NewsItem[];
   galleryItems?: ResearchNewsItem[];
+  shape?: 'landscape' | 'portrait';
 }
 
 type PageData =
@@ -103,6 +104,7 @@ export default function HomePageClient({ dataByLocale, defaultLocale }: HomePage
                         key={section.id}
                         items={section.galleryItems || []}
                         title={section.title}
+                        shape={section.shape}
                       />
                     );
                   default:

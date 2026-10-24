@@ -33,7 +33,8 @@ title = "News"
 id = "research_news"
 type = "gallery"
 source = "research_news.toml"
-title = "Research Highlights"
+title = "Covers"
+shape = "portrait"
 
 [[sections]]
 id = "conference_gallery"
