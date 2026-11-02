@@ -82,16 +82,18 @@ def build(out, layout):
 BASE = r'C:\Users\admin\WorkBuddy\20260411131313\my-academic-homepage\public\Conference'
 
 JOBS = {
-    # 上层放内容更关键的一张：海报 / 大会背景板合影，压住现场照的边缘即可
-    'mahx2026-pair.jpg': [
-        dict(src=f'{BASE}\\mahx2026-2.jpg', win=(680, 510), cx=1160, cy=668, angle=4.4,
-             warmth=-0.5, shadow=185),
-        dict(src=f'{BASE}\\mahx2026-1.jpg', win=(680, 510), cx=440, cy=548, angle=-5.2, warmth=0.9),
+    # 大纸放大到铺满画布（只留一圈窄边），小图放大到 ~40% 并置于上层完整可见
+    'mahx2026-pair3.jpg': [
+        dict(src=f'{BASE}\\mahx2026-1.jpg', win=(1340, 1005), cx=800, cy=598, angle=-2.0,
+             border=24, warmth=0.9),
+        dict(src=f'{BASE}\\mahx2026-2.jpg', win=(540, 405), cx=1278, cy=930, angle=4.2,
+             border=20, warmth=-0.5, shadow=205),
     ],
-    'osac2026-pair.jpg': [
-        dict(src=f'{BASE}\\osac2026-1.jpg', win=(680, 510), cx=440, cy=548, angle=4.8, warmth=-0.5),
-        dict(src=f'{BASE}\\osac2026-2.jpg', win=(680, 510), cx=1160, cy=668, angle=-4.2,
-             warmth=0.9, shadow=185),
+    'osac2026-pair3.jpg': [
+        dict(src=f'{BASE}\\osac2026-1.jpg', win=(1340, 1005), cx=800, cy=598, angle=1.8,
+             border=24, warmth=-0.5),
+        dict(src=f'{BASE}\\osac2026-2.jpg', win=(540, 405), cx=1278, cy=930, angle=-3.6,
+             border=20, warmth=0.9, shadow=205),
     ],
 }
 
