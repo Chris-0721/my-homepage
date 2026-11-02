@@ -10,6 +10,15 @@ content = "一种基于全息倏逝波光镊的智能分析方法与装置。Inv
 
 [[items]]
 title = "Invited Talk"
+subtitle = "1st Conference on Light Field Manipulation and Applications"
+date = "2026"
+content = "Invited talk, 30 October - 1 November 2026, Qianfoshan Campus of Shandong Normal University, Jinan, China. Hosted by Shandong Normal University and Ludong University."
+images = [
+  "/Conference/lcfa2026-1.jpg"
+]
+
+[[items]]
+title = "Invited Talk"
 subtitle = "CSMNT 2026 — 28th Annual Conference of the Chinese Society of Micro-Nano Technology & 17th International Conference"
 date = "2026"
 content = "Invited talk at CSMNT2026, held on 16-18 October 2026. Shaoxing, China."
