@@ -1,11 +1,8 @@
-"""两张照片拼成 4:3 相纸风拼贴（与 lcfa2026-1.jpg 同一视觉语言）"""
-import random
+"""两张照片拼成 4:3 相纸拼贴：大纸打底 + 第二张斜压其上，留白少、有遮挡层次"""
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
 W, H = 1600, 1200
-WIN_W, WIN_H = 660, 495
-BORDER = 20
 
 
 def cover(im, w, h):
@@ -16,72 +13,88 @@ def cover(im, w, h):
     return im2.crop((x, y, x + w, y + h))
 
 
-def make_paper(src):
-    inner = cover(Image.open(src).convert('RGB'), WIN_W, WIN_H)
-    pw, ph = WIN_W + BORDER * 2, WIN_H + BORDER * 2
+def tint(im, warmth):
+    """warmth>0 偏暖（黄红），<0 偏冷（蓝）。幅度很小，只为打破两张纸的均质感。"""
+    if not warmth:
+        return im
+    r, g, b = im.split()
+    r = r.point(lambda v: min(255, int(v * (1 + 0.030 * warmth))))
+    b = b.point(lambda v: int(v * (1 - 0.028 * warmth)))
+    return Image.merge('RGB', (r, g, b))
+
+
+def make_paper(src, win_w, win_h, border, warmth=0.0):
+    inner = tint(cover(Image.open(src).convert('RGB'), win_w, win_h), warmth)
+    pw, ph = win_w + border * 2, win_h + border * 2
     p = Image.new('RGB', (pw, ph), (252, 251, 249))
-    p.paste(inner, (BORDER, BORDER))
-    d = ImageDraw.Draw(p)
-    d.rectangle([0, 0, pw - 1, ph - 1], outline=(226, 222, 216))
+    p.paste(inner, (border, border))
+    ImageDraw.Draw(p).rectangle([0, 0, pw - 1, ph - 1], outline=(224, 220, 214))
     return p
 
 
 def background():
-    top = np.array([239, 236, 231], dtype=np.float32)
-    bot = np.array([219, 214, 206], dtype=np.float32)
+    top = np.array([240, 237, 232], dtype=np.float32)
+    bot = np.array([214, 209, 200], dtype=np.float32)
     ramp = np.linspace(0, 1, H, dtype=np.float32)[:, None, None]
     arr = top[None, None, :] + (bot - top)[None, None, :] * ramp
     arr = np.repeat(arr, W, axis=1)
-    noise = np.random.default_rng(7).normal(0, 2.6, (H, W, 1)).astype(np.float32)
-    arr = np.clip(arr + noise, 0, 255).astype(np.uint8)
-    return Image.fromarray(arr, 'RGB')
+    noise = np.random.default_rng(7).normal(0, 2.8, (H, W, 1)).astype(np.float32)
+    return Image.fromarray(np.clip(arr + noise, 0, 255).astype(np.uint8), 'RGB')
 
 
-def place(canvas, paper, cx, cy, angle, shadow_alpha=130, shadow_offset=(10, 14), blur=16):
+def vignette(canvas, strength=0.20, reach=0.60):
+    w, h = canvas.size
+    y, x = np.mgrid[0:h, 0:w]
+    d = np.sqrt(((x - w / 2) / (w * reach)) ** 2 + ((y - h / 2) / (h * reach)) ** 2)
+    v = np.clip(1 - strength * np.clip(d, 0, 1.7) ** 2.2, 0, 1)
+    arr = np.asarray(canvas, dtype=np.float32) * v[:, :, None]
+    return Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8), 'RGB')
+
+
+def place(canvas, paper, cx, cy, angle, shadow_alpha=155, offset=(16, 20), blur=20):
     rot = paper.rotate(angle, expand=True, resample=Image.BICUBIC)
     mask = Image.new('L', paper.size, 255).rotate(angle, expand=True, resample=Image.BICUBIC)
     sw, sh = rot.size
     shadow = Image.new('L', canvas.size, 0)
-    shadow_layer = Image.new('L', (sw, sh), 0)
-    shadow_layer.paste(mask, (0, 0))
-    shadow_layer = shadow_layer.point(lambda v: shadow_alpha if v > 128 else 0).filter(
-        ImageFilter.GaussianBlur(blur)
-    )
-    shadow.paste(shadow_layer, (int(cx - sw / 2 + shadow_offset[0]), int(cy - sh / 2 + shadow_offset[1])))
-    canvas.paste(Image.new('RGB', canvas.size, (60, 54, 46)), (0, 0), shadow)
+    layer = Image.new('L', (sw, sh), 0)
+    layer.paste(mask, (0, 0))
+    layer = layer.point(lambda v: shadow_alpha if v > 128 else 0).filter(ImageFilter.GaussianBlur(blur))
+    shadow.paste(layer, (int(cx - sw / 2 + offset[0]), int(cy - sh / 2 + offset[1])))
+    canvas.paste(Image.new('RGB', canvas.size, (58, 52, 44)), (0, 0), shadow)
     canvas.paste(rot, (int(cx - sw / 2), int(cy - sh / 2)), mask)
 
 
-def build(sources, out, layout):
+def build(out, layout):
     canvas = background()
     for item in layout:
-        src, cx, cy, ang = item[0], item[1], item[2], item[3]
-        scale = item[4] if len(item) > 4 else 1.0
-        paper = make_paper(src)
-        if scale != 1.0:
-            paper = paper.resize(
-                (int(paper.width * scale), int(paper.height * scale)), Image.LANCZOS
-            )
-        place(canvas, paper, cx, cy, ang)
+        paper = make_paper(item['src'], item['win'][0], item['win'][1], item.get('border', 20),
+                           item.get('warmth', 0.0))
+        if item.get('scale', 1.0) != 1.0:
+            s = item['scale']
+            paper = paper.resize((int(paper.width * s), int(paper.height * s)), Image.LANCZOS)
+        place(canvas, paper, item['cx'], item['cy'], item['angle'],
+              shadow_alpha=item.get('shadow', 155))
+    canvas = vignette(canvas)
     canvas.save(out, 'JPEG', quality=90, optimize=True, progressive=False)
     print('saved', out, canvas.size)
 
 
+BASE = r'C:\Users\admin\WorkBuddy\20260411131313\my-academic-homepage\public\Conference'
+
+JOBS = {
+    # 上层放内容更关键的一张：海报 / 大会背景板合影，压住现场照的边缘即可
+    'mahx2026-pair.jpg': [
+        dict(src=f'{BASE}\\mahx2026-2.jpg', win=(680, 510), cx=1160, cy=668, angle=4.4,
+             warmth=-0.5, shadow=185),
+        dict(src=f'{BASE}\\mahx2026-1.jpg', win=(680, 510), cx=440, cy=548, angle=-5.2, warmth=0.9),
+    ],
+    'osac2026-pair.jpg': [
+        dict(src=f'{BASE}\\osac2026-1.jpg', win=(680, 510), cx=440, cy=548, angle=4.8, warmth=-0.5),
+        dict(src=f'{BASE}\\osac2026-2.jpg', win=(680, 510), cx=1160, cy=668, angle=-4.2,
+             warmth=0.9, shadow=185),
+    ],
+}
+
 if __name__ == '__main__':
-    base = r'C:\Users\admin\WorkBuddy\20260411131313\my-academic-homepage\public\Conference'
-    build(
-        [f'{base}\\mahx2026-1.jpg', f'{base}\\mahx2026-2.jpg'],
-        f'{base}\\mahx2026-pair.jpg',
-        [
-            (f'{base}\\mahx2026-1.jpg', 445, 640, -4.2, 1.0),
-            (f'{base}\\mahx2026-2.jpg', 1160, 570, 3.4, 0.94),
-        ],
-    )
-    build(
-        [f'{base}\\osac2026-1.jpg', f'{base}\\osac2026-2.jpg'],
-        f'{base}\\osac2026-pair.jpg',
-        [
-            (f'{base}\\osac2026-1.jpg', 470, 575, 3.6, 0.94),
-            (f'{base}\\osac2026-2.jpg', 1155, 645, -3.8, 1.0),
-        ],
-    )
+    for name, layout in JOBS.items():
+        build(f'{BASE}\\{name}', layout)
