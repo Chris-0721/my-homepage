@@ -31,6 +31,8 @@ export interface LocaleMessages {
     news: string;
     selectedPublications: string;
     viewAll: string;
+    expand: string;
+    collapse: string;
   };
   publications: {
     searchPlaceholder: string;
@@ -83,6 +85,8 @@ const en: LocaleMessages = {
     news: 'News',
     selectedPublications: 'Selected Publications',
     viewAll: 'View All',
+    expand: 'Show all',
+    collapse: 'Show less',
   },
   publications: {
     searchPlaceholder: 'Search publications...',
@@ -135,6 +139,8 @@ const zh: LocaleMessages = {
     news: '动态',
     selectedPublications: '精选论文',
     viewAll: '查看全部',
+    expand: '展开全部',
+    collapse: '收起',
   },
   publications: {
     searchPlaceholder: '搜索论文...',

@@ -101,7 +101,7 @@ export default function ResearchNews({ items, title, shape = 'landscape' }: Rese
 
             {/* Card Content */}
             <div className="p-2.5 space-y-1">
-              <h3 className="font-semibold text-primary text-xs leading-snug line-clamp-2 group-hover:text-accent transition-colors duration-200">
+              <h3 className="font-semibold text-primary text-xs leading-snug line-clamp-3 min-h-[4.1em] group-hover:text-accent transition-colors duration-200">
                 {item.title}
               </h3>
               <p className="text-[10px] font-medium text-accent line-clamp-1">

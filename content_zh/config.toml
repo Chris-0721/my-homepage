@@ -52,9 +52,3 @@ title = "简历"
 type = "page"
 target = "cv"
 href = "/cv"
-
-[[navigation]]
-title = "AI SKILL"
-type = "link"
-target = "ai-skill"
-href = "/tools/ai_skills.html"
