@@ -4,4 +4,4 @@ From January 2025 to January 2026, I was a Postdoctoral Research Fellow at Nanya
 
 Since June 2026, I have been an Associate Researcher at the College of Physics, Chengdu University of Technology, joining Prof. [Fangwei Ye](https://scholar.google.com/citations?user=ycBkkwgAAAAJ&hl=zh-CN&oi=ao)'s research group.
 
-My research focuses on structured light field manipulation, topological structured light, and optical tweezers. I have published 20+ peer-reviewed papers in top-tier journals including *Nature Communications*, *Advanced Materials*, *elght*, *Light: Science & Applications*, *Nano Letters*, and *Photonics Research*.
+My research focuses on structured light field manipulation, topological structured light, and optical tweezers. I have published 11 papers as first author, co-first author, or corresponding author in journals including *Optica*, *Nano Letters*, *ACS Photonics*, and *Photonics Research*. I have given invited talks at conferences including the 1st Conference on Light Field Manipulation and Applications and CSMNT2026.
