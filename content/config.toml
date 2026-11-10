@@ -89,3 +89,9 @@ title = "CV"
 type = "page"
 target = "cv"
 href = "/cv"
+
+[[navigation]]
+title = "Source"
+type = "link"
+target = "source"
+href = "/source/"

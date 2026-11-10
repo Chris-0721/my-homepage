@@ -52,3 +52,9 @@ title = "简历"
 type = "page"
 target = "cv"
 href = "/cv"
+
+[[navigation]]
+title = "资源"
+type = "link"
+target = "source"
+href = "/source/"
