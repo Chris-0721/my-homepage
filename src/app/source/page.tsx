@@ -18,6 +18,8 @@ export const metadata: Metadata = {
 };
 
 export default function SourcePage() {
-  const guide = readFileSync(join(process.cwd(), 'src/app/source/guide.html'), 'utf8');
-  return <ResourceGuide guide={guide} />;
+  const directory = join(process.cwd(), 'src/app/source');
+  const chinese = readFileSync(join(directory, 'guide.html'), 'utf8');
+  const english = readFileSync(join(directory, 'guide.en.html'), 'utf8');
+  return <ResourceGuide chinese={chinese} english={english} />;
 }

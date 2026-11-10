@@ -1,8 +1,12 @@
 'use client';
 
 import type { MouseEvent } from 'react';
+import { useLocaleStore } from '@/lib/stores/localeStore';
 
-export default function ResourceGuide({ guide }: { guide: string }) {
+export default function ResourceGuide({ chinese, english }: { chinese: string; english: string }) {
+  const locale = useLocaleStore((state) => state.locale);
+  const isEnglish = locale === 'en';
+
   function openGuideDialog(event: MouseEvent<HTMLDivElement>) {
     if (!(event.target instanceof Element)) return;
 
@@ -19,9 +23,9 @@ export default function ResourceGuide({ guide }: { guide: string }) {
   return (
     <div
       className="resource-guide"
-      lang="zh-CN"
+      lang={isEnglish ? 'en' : 'zh-CN'}
       onClick={openGuideDialog}
-      dangerouslySetInnerHTML={{ __html: guide }}
+      dangerouslySetInnerHTML={{ __html: isEnglish ? english : chinese }}
     />
   );
 }

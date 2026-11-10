@@ -14,6 +14,8 @@
         <a href="#zotero">Zotero 与科研笔记</a>
         <a href="#ai">科研 AI 与 Agent</a>
         <a href="#software">科研软件与仿真</a>
+        <a class="toc-sub" href="#solvers">数值求解与仿真</a>
+        <a class="toc-sub" href="#support-tools">科研辅助软件</a>
         <a href="#writing">论文写作与汇报</a>
         <a href="#bookmarks">光学书签</a>
       </nav>
@@ -24,10 +26,12 @@
         <h2>学术网络与网站</h2>
         <div class="entry">
           <h3>校园资源与 Clash Verge Rev</h3>
-          <p>访问学校订购的数据库时，从图书馆或学校的校外访问入口登录。GitHub 下载不便时，可以直接使用本站附带的安装包。<strong>订阅链接可以找我。</strong></p>
+          <p><strong>Clash Verge Rev 是用于科学上网的代理客户端。</strong>导入订阅并开启系统代理后，支持系统代理的浏览器和应用即可按规则访问境外学术网站。GitHub 下载不便时，可直接使用本站的安装包。<strong>订阅链接可以找我。</strong></p>
+          <p>访问学校订购的数据库时，从图书馆或学校的校外访问入口登录。</p>
           <p><a class="guide-button download-button" href="/source/downloads/Clash.Verge_2.5.1_x64-setup.exe" download>下载 Windows x64 安装包 · v2.5.1</a></p>
+          <button class="guide-button" type="button" data-dialog="clash-dialog">查看 3 张 Clash 操作截图 <span aria-hidden="true">↗</span></button>
           <details><summary>配置步骤与其他版本</summary>
-            <ol><li>按系统和处理器架构下载安装包。常见的 Intel、AMD 64 位 Windows 电脑选择 Windows x64。</li><li>启动客户端，在「订阅」页粘贴订阅地址，点「导入」并选中导入的配置。订阅地址通常含个人令牌，请保存在自己的客户端中。</li><li>在「代理」页选择节点，从首页打开「系统代理」。使用完毕后可在同一处关闭。</li></ol>
+            <ol><li>按系统和处理器架构下载安装包。常见的 Intel、AMD 64 位 Windows 电脑选择 Windows x64。</li><li>启动客户端，在「订阅」页粘贴订阅地址，点「导入」并选中导入的配置。订阅地址通常含个人令牌，请保存在自己的客户端中。</li><li>在「代理」页选择节点和模式，再打开「系统代理」。使用完毕后可关闭此开关。</li></ol>
             <ul class="resource-links">
               <li><a href="https://github.com/Clash-Verge-rev/clash-verge-rev/releases/tag/v2.5.1">v2.5.1 官方发布页与源码</a></li>
               <li><a href="https://github.com/Clash-Verge-rev/clash-verge-rev/releases">其他平台与版本</a></li>
@@ -37,7 +41,7 @@
         </div>
         <div class="entry">
           <h3>赔钱机场</h3>
-          <p>付费订阅服务。登录后可在面板查看套餐和购买入口。</p>
+          <p>付费 VPN／代理订阅服务，可为 Clash Verge Rev 提供代理节点。登录面板后可查看套餐和购买入口，获取订阅链接后将其导入客户端。</p>
           <p><a href="https://www.pqjc.site/dashboard">打开赔钱机场面板</a></p>
         </div>
         <div class="entry">
@@ -79,9 +83,10 @@
       </section>
 
       <section id="zotero">
-        <h2>Zotero 与科研笔记</h2>
+        <h2>文献管理与科研笔记</h2>
         <div class="entry">
-          <h3>安装 Zotero 和浏览器 Connector</h3>
+          <h3>Zotero · 文献管理器</h3>
+          <p>用 Zotero 收集和整理论文、管理 PDF 附件与批注，并在写作时插入引文和生成参考文献。Zotero Connector 负责从浏览器保存题录与可用附件。</p>
           <ol><li>从官方下载页安装 Zotero，再为当前浏览器安装 Zotero Connector。</li><li>打开文献的摘要页或出版社页面，点浏览器工具栏的 Connector 图标，选择目标分类并保存。</li><li>回到 Zotero，检查条目和附件。若 PDF 未自动保存，可把通过授权渠道取得的 PDF 拖到对应条目上。</li></ol>
           <button class="guide-button" type="button" data-dialog="zotero-dialog">查看下载页截图 <span aria-hidden="true">↗</span></button>
           <details><summary>展开下载与插件链接</summary>
@@ -108,14 +113,21 @@
 
       <section id="software">
         <h2>科研软件与仿真</h2>
-        <dl><div class="entry"><dt>MATLAB · 成都理工大学</dt><dd>进入学校正版软件管理与服务平台，找到 MATLAB，按校方步骤使用学校邮箱关联授权。安装完成后启动软件，检查许可证和所需工具箱。 <a href="https://wxc.cdut.edu.cn/info/1006/3382.htm">校方通知</a></dd></div>
-          <div class="entry"><dt>Python</dt><dd>安装 Python，检查解释器版本，再为项目创建虚拟环境。进入项目后按其依赖文件安装所需包。 <a href="https://docs.python.org/3/tutorial/venv.html">虚拟环境文档</a></dd></div>
-          <div class="entry"><dt>VS Code</dt><dd>用「打开文件夹」查看项目；Markdown 用预览功能，LaTeX 可装 LaTeX Workshop 并配置 TeX 发行版；运行 Python 前选择项目的解释器。 <a href="https://code.visualstudio.com/docs/python/python-tutorial">官方教程</a></dd></div>
-          <div class="entry"><dt>Ansys Lumerical FDTD</dt><dd>打开项目后按几何、材料、源、仿真区域和监视器的顺序核对设置。运行后从监视器查看或导出结果。 <a href="https://optics.ansys.com/hc/en-us/articles/360042703433-Mie-scattering-FDTD">Ansys Optics 文档</a></dd></div>
-          <div class="entry"><dt>COMSOL Multiphysics</dt><dd>在模型树中检查物理接口和边界条件，构建网格后运行研究，再到「结果」或「派生值」查看输出。 <a href="https://www.comsol.com/support/learning-center/article/setting-up-an-optical-scattering-model-91061">COMSOL 学习中心</a></dd></div>
-          <div class="entry"><dt>Mathematica</dt><dd>新建 Notebook，用 <kbd>Shift</kbd> + <kbd>Enter</kbd> 运行当前单元。在函数文档里确认参数、默认假设以及符号或数值求解的输出格式。 <a href="https://www.wolfram.com/mathematica/">官方入口</a></dd></div>
-          <div class="entry"><dt>Blender</dt><dd>在视图中添加和摆放对象，设置材质、灯光和相机，再从渲染菜单生成并保存图像。 <a href="https://docs.blender.org/manual/en/latest/render/output/introduction.html">渲染手册</a></dd></div>
-          <div class="entry"><dt>网易 UU 远程</dt><dd>在控制端和获准使用的工作站安装客户端，登录后从设备列表选择目标。操作完成后断开会话。 <a href="https://uuyc.163.com/">网易官方入口</a></dd></div></dl>
+        <h3 class="software-group" id="solvers">数值求解与仿真</h3>
+        <dl>
+          <div class="entry"><dt>MATLAB · 数值计算与数据处理</dt><dd>适合矩阵运算、方程求解、参数扫描和结果绘图。成都理工大学师生可通过校方正版软件平台关联学校邮箱授权。 <a href="https://wxc.cdut.edu.cn/info/1006/3382.htm">校方通知</a></dd></div>
+          <div class="entry"><dt>Python · 科学计算与自动化</dt><dd>配合 NumPy 和 SciPy 做数组计算、数值积分、方程求解和拟合，也可批量处理实验数据。为每个项目单独创建虚拟环境。 <a href="https://docs.python.org/3/tutorial/venv.html">虚拟环境文档</a></dd></div>
+          <div class="entry"><dt>Mathematica · 符号推导与数值求解</dt><dd>适合化简公式、求导、积分，以及求解代数方程和微分方程。Notebook 中用 <kbd>Shift</kbd> + <kbd>Enter</kbd> 运行当前单元。 <a href="https://www.wolfram.com/mathematica/">官方入口</a></dd></div>
+          <div class="entry"><dt>Ansys Lumerical FDTD · 时域电磁仿真</dt><dd>用时域有限差分法计算光场传播和散射。适合提取纳米结构的透射、反射、散射谱与近场分布。 <a href="https://optics.ansys.com/hc/en-us/articles/360042703433-Mie-scattering-FDTD">Ansys Optics 文档</a></dd></div>
+          <div class="entry"><dt>COMSOL Multiphysics · 有限元与多物理场仿真</dt><dd>适合有限元波动光学仿真，以及电磁、传热等物理场的耦合计算。可查看场分布、参数扫描和派生量。 <a href="https://www.comsol.com/support/learning-center/article/setting-up-an-optical-scattering-model-91061">COMSOL 学习中心</a></dd></div>
+        </dl>
+        <h3 class="software-group" id="support-tools">科研辅助软件</h3>
+        <dl>
+          <div class="entry"><dt>VS Code · 代码编辑与调试</dt><dd>管理科研项目文件，编辑和调试 Python，预览 Markdown，并通过 LaTeX Workshop 编辑和构建 LaTeX 项目。 <a href="https://code.visualstudio.com/docs/python/python-tutorial">官方教程</a></dd></div>
+          <div class="entry"><dt>Matplotlib · 科研数据绘图</dt><dd>用 Python 从数据生成光谱曲线、散点图、热图和多面板图。可导出 PDF 或 SVG 供论文排版。 <a href="https://matplotlib.org/stable/users/explain/quick_start.html">Matplotlib 入门</a></dd></div>
+          <div class="entry"><dt>Blender · 三维建模与示意图</dt><dd>搭建实验装置、样品和光路的三维示意图，设置材质、灯光和相机后渲染。 <a href="https://docs.blender.org/manual/en/latest/render/output/introduction.html">渲染手册</a></dd></div>
+          <div class="entry"><dt>网易 UU 远程 · 远程连接与桌面控制</dt><dd>从个人电脑连接获准使用的工作站，查看仿真进度或操作工作站上的软件。完成后断开会话。 <a href="https://uuyc.163.com/">网易官方入口</a></dd></div>
+        </dl>
       </section>
 
       <section id="writing">
@@ -139,6 +151,16 @@
       <footer class="page-footer"><a href="#top">回到顶部 ↑</a><span>X² 实验室</span></footer>
     </article>
   </div>
+
+  <dialog class="glass screenshot-dialog" id="clash-dialog" aria-labelledby="clash-dialog-title">
+    <header class="dialog-header"><h2 id="clash-dialog-title">Clash Verge Rev 操作截图</h2><form method="dialog"><button autofocus aria-label="关闭 Clash 操作截图">关闭</button></form></header>
+    <div class="dialog-content">
+      <figure><img src="/source/assets/clash-import.webp" loading="lazy" alt="Clash Verge Rev 订阅页，标出订阅链接输入框和导入按钮"><figcaption><strong>截图 1 · 导入订阅</strong><span>打开「订阅」，粘贴订阅链接并点击「导入」，再选中导入的配置。</span></figcaption></figure>
+      <figure><img src="/source/assets/clash-proxy.webp" loading="lazy" alt="Clash Verge Rev 代理组页面和规则、全局、直连切换"><figcaption><strong>截图 2 · 选择节点与模式</strong><span>在「代理」页选择可用节点。「规则」模式按订阅配置分流。</span></figcaption></figure>
+      <figure><img src="/source/assets/clash-system-proxy.webp" loading="lazy" alt="Clash Verge Rev 设置页面，标出系统代理开关"><figcaption><strong>截图 3 · 开启系统代理</strong><span>打开「系统代理」后，在浏览器中测试所需网站。新版也可能在首页提供开关。</span></figcaption></figure>
+      <p><a href="https://www.clashverge.dev/guide/quickstart.html">截图来源：Clash Verge Rev 官方快速入门</a></p>
+    </div>
+  </dialog>
 
   <dialog class="glass screenshot-dialog" id="arxiv-dialog" aria-labelledby="arxiv-dialog-title">
     <header class="dialog-header"><h2 id="arxiv-dialog-title">如何使用 arXiv</h2><form method="dialog"><button autofocus aria-label="关闭 arXiv 图解">关闭</button></form></header>
