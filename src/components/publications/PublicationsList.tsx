@@ -312,6 +312,17 @@ export default function PublicationsList({ config, publications, embedded = fals
                                                 DOI
                                             </a>
                                         )}
+                                        {pub.press?.map((item, pressIndex) => (
+                                            <a
+                                                key={`press-${pressIndex}`}
+                                                href={item.url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="inline-flex items-center px-3 py-1 rounded-md text-xs font-medium border border-accent text-accent hover:bg-accent hover:text-white transition-colors"
+                                            >
+                                                {item.label || messages.publications.press}
+                                            </a>
+                                        ))}
                                         {pub.code && (
                                             <a
                                                 href={pub.code}

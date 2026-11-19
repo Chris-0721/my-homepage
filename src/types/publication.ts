@@ -9,6 +9,12 @@ export interface Author {
   isCoAuthor?: boolean;
 }
 
+/** 媒体报道（公众号推文、新闻稿等）。label 缺省时渲染为通用「公众号报道」 */
+export interface PublicationPress {
+  label?: string;
+  url: string;
+}
+
 export interface Publication {
   id: string;
   title: string;
@@ -47,6 +53,8 @@ export interface Publication {
   summary?: string;
   researchArea: ResearchArea;
   description?: string;
+  /** 媒体报道链接（bib: press={名称|URL}，多条用 ;; 分隔） */
+  press?: PublicationPress[];
 }
 
 export type PublicationType =

@@ -1,4 +1,4 @@
-import { Publication, PublicationType, ResearchArea } from '@/types/publication';
+import { Publication, PublicationPress, PublicationType, ResearchArea } from '@/types/publication';
 import { getConfig } from './config';
 import { getRuntimeI18nConfig } from './i18n/config';
 
@@ -68,6 +68,18 @@ export function parseBibTeX(bibtexContent: string, locale?: string): Publication
         ? ('portrait' as const)
         : undefined;
 
+    // 媒体报道：press={名称|URL}，多条用 ;; 分隔；名称可省略（渲染为通用「公众号报道」）
+    const press: PublicationPress[] = (tags.press || '')
+      .replace(/[{}]/g, '')
+      .split(';;')
+      .map((item: string) => item.trim())
+      .filter(Boolean)
+      .flatMap((item: string): PublicationPress[] => {
+        const [label, url] = item.split('|').map((part: string) => part.trim());
+        if (!url) return [];
+        return label ? [{ label, url }] : [{ url }];
+      });
+
     // Create publication object
     const publication: Publication = {
       id: entry.citationKey || tags.id || `pub-${Date.now()}-${index}`,
@@ -95,9 +107,10 @@ export function parseBibTeX(bibtexContent: string, locale?: string): Publication
       selected,
       preview,
       previewShape,
+      press: press.length > 0 ? press : undefined,
 
       // Store original BibTeX (excluding custom fields)
-      bibtex: reconstructBibTeX(entry, ['selected', 'preview', 'previewShape', 'previewshape', 'description', 'keywords', 'code']),
+      bibtex: reconstructBibTeX(entry, ['selected', 'preview', 'previewShape', 'previewshape', 'description', 'keywords', 'code', 'press']),
     };
 
     // Clean up undefined fields
