@@ -95,6 +95,15 @@ JOBS = {
         dict(src=f'{BASE}\\osac2026-2.jpg', win=(540, 405), cx=1278, cy=930, angle=-3.6,
              border=20, warmth=0.9, shadow=205),
     ],
+    # 三件式：竖版讲座海报打底（左），两张报告现场照右上/右下叠放
+    'physsem2026-20-collage.jpg': [
+        dict(src=f'{BASE}\\physsem2026-20-poster.jpg', win=(660, 924), cx=448, cy=600,
+             angle=-1.4, border=22, warmth=-0.3),
+        dict(src=f'{BASE}\\physsem2026-20-1.jpg', win=(520, 390), cx=1200, cy=400,
+             angle=3.0, border=18, warmth=0.6, shadow=185),
+        dict(src=f'{BASE}\\physsem2026-20-2.jpg', win=(520, 390), cx=1225, cy=822,
+             angle=-3.6, border=18, warmth=-0.8, shadow=200),
+    ],
 }
 
 if __name__ == '__main__':
